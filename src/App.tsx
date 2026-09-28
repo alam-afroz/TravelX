@@ -12,6 +12,7 @@ import { GeneratorDrawer } from './components/GeneratorDrawer.tsx';
 import { TransportationSection } from './components/TransportationSection.tsx';
 import { HomePage } from './components/HomePage.tsx';
 import { SearchWindow } from './components/SearchWindow.tsx';
+import { AboutPage } from './components/AboutPage.tsx';
 import {
   Compass,
   Sparkles,
@@ -32,7 +33,7 @@ import {
   Search,
 } from 'lucide-react';
 
-type AppView = 'home' | 'search' | 'results';
+type AppView = 'home' | 'search' | 'results' | 'about';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<AppView>(() => {
@@ -40,6 +41,7 @@ export default function App() {
       const hash = window.location.hash;
       if (hash === '#search') return 'search';
       if (hash === '#results' || hash === '#itinerary') return 'results';
+      if (hash === '#about') return 'about';
     }
     return 'home';
   });
@@ -62,6 +64,8 @@ export default function App() {
         setCurrentView('search');
       } else if (hash === '#results' || hash === '#itinerary') {
         setCurrentView('results');
+      } else if (hash === '#about') {
+        setCurrentView('about');
       }
     };
 
@@ -161,6 +165,13 @@ export default function App() {
         onBackToHome={() => navigateTo('home')}
         onGenerated={handleGeneratedFromSearch}
       />
+    );
+  }
+
+  // Screen 3: About Page
+  if (currentView === 'about') {
+    return (
+      <AboutPage onBackToHome={() => navigateTo('home')} />
     );
   }
 

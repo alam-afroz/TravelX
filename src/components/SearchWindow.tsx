@@ -187,9 +187,9 @@ export function SearchWindow({
     } catch (err: any) {
       console.error(err);
       if (matchedPreset) {
-        setErrorMsg(`${err.message || 'Generation issue'}. You can load the verified pre-crafted itinerary for ${city} below.`);
+        setErrorMsg(`Please try again. You can also load the verified pre-crafted itinerary for ${city} below.`);
       } else {
-        setErrorMsg(err.message || 'Error communicating with generation engine');
+        setErrorMsg('Please try again.');
       }
     } finally {
       clearTimeout(timer1);
@@ -413,21 +413,14 @@ export function SearchWindow({
 
           {/* Progress / Loading Indicator */}
           {loading && (
-            <div className="p-5 bg-blue-50 border border-blue-200 rounded-sm space-y-3">
-              <div className="flex items-center gap-3">
-                <Loader2 className="w-5 h-5 text-blue-600 animate-spin" />
-                <div>
-                  <h5 className="text-xs font-bold text-blue-900">
-                    Generating Itinerary for {city}...
-                  </h5>
-                  <p className="text-[11px] text-blue-700">{progressMessage}</p>
-                </div>
+            <div className="space-y-2 mt-2">
+              <div className="flex items-center gap-2">
+                <Loader2 className="w-4 h-4 text-[#2d497c] animate-spin" />
+                <span className="text-sm font-medium text-slate-700">Please wait...</span>
               </div>
-
-              {/* Progress Bar */}
-              <div className="w-full bg-blue-100 rounded-full h-1.5 overflow-hidden">
+              <div className="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
                 <div
-                  className="bg-blue-600 h-1.5 transition-all duration-500"
+                  className="bg-[#2d497c] h-1.5 transition-all duration-500"
                   style={{ width: `${progressStep * 25}%` }}
                 />
               </div>

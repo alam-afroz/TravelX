@@ -17,6 +17,7 @@ import { Itinerary } from '../types.ts';
 import slide1 from '../assets/hero_section/ladakh.png';
 import slide2 from '../assets/hero_section/ghat.jpg';
 import searchImg from '../assets/search.png';
+import resultImg from '../assets/result.png';
 
 import imgJaipur from '../assets/popular_destination/Jaipur.jpg';
 import imgLucknow from '../assets/popular_destination/Lucknow.jpg';
@@ -78,7 +79,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
               Explore
             </button>
             <button onClick={() => onStartSearch()} className="hover:text-[#2d497c] transition-colors font-light text-slate-400">Search</button>
-            <button className="hover:text-[#2d497c] transition-colors">About</button>
+            <button onClick={() => window.location.hash = '#about'} className="hover:text-[#2d497c] transition-colors cursor-pointer">About</button>
           </nav>
           
           {/* Center Logo */}
@@ -223,7 +224,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
                 className="w-full lg:w-[60%] flex justify-center"
               >
                 <img 
-                  src={searchImg} 
+                  src={resultImg} 
                   alt="Customization interface preview" 
                   className="w-full rounded-sm shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] border-4 sm:border-8 border-white/95" 
                 />
