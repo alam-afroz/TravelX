@@ -65,11 +65,11 @@ export function RawJsonViewer({ itinerary, onImportJson }: RawJsonViewerProps) {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs">
+    <div className="rounded-sm border border-slate-200 bg-white overflow-hidden shadow-xs">
       {/* Header bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-3.5 border-b border-slate-200 bg-slate-50">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center">
+          <div className="w-8 h-8 rounded-sm bg-slate-900 text-white flex items-center justify-center">
             <Code2 className="w-4 h-4" />
           </div>
           <div>
@@ -101,14 +101,14 @@ export function RawJsonViewer({ itinerary, onImportJson }: RawJsonViewerProps) {
             <>
               <button
                 onClick={handleApplyJson}
-                className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1.5 shadow-xs"
+                className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-sm transition flex items-center gap-1.5 shadow-xs"
               >
                 <Check className="w-3.5 h-3.5" />
                 Apply Changes
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="px-3 py-1.5 text-slate-600 hover:bg-slate-200 text-xs rounded-lg transition"
+                className="px-3 py-1.5 text-slate-600 hover:bg-slate-200 text-xs rounded-sm transition"
               >
                 Cancel
               </button>
@@ -117,13 +117,13 @@ export function RawJsonViewer({ itinerary, onImportJson }: RawJsonViewerProps) {
             <>
               <button
                 onClick={handleStartEdit}
-                className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-medium rounded-lg transition"
+                className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-medium rounded-sm transition"
               >
                 Paste / Edit JSON
               </button>
               <button
                 onClick={handleCopy}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 text-xs font-semibold rounded-sm transition flex items-center gap-1.5 ${
                   copied
                     ? 'bg-emerald-600 text-white'
                     : 'bg-slate-900 hover:bg-slate-800 text-white shadow-xs'
@@ -134,7 +134,7 @@ export function RawJsonViewer({ itinerary, onImportJson }: RawJsonViewerProps) {
               </button>
               <button
                 onClick={handleDownload}
-                className="p-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-lg transition"
+                className="p-1.5 bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 rounded-sm transition"
                 title="Download JSON File"
               >
                 <Download className="w-4 h-4" />
@@ -158,7 +158,7 @@ export function RawJsonViewer({ itinerary, onImportJson }: RawJsonViewerProps) {
             value={editedText}
             onChange={(e) => setEditedText(e.target.value)}
             rows={22}
-            className="w-full font-mono text-xs p-4 bg-slate-950 text-emerald-400 rounded-xl border border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 leading-relaxed"
+            className="w-full font-mono text-xs p-4 bg-slate-950 text-emerald-400 rounded-sm border border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 leading-relaxed"
             placeholder="Paste your itinerary JSON here..."
           />
         </div>

@@ -57,7 +57,7 @@ export function SearchWindow({
   const [city, setCity] = useState(initialCity);
   const [country, setCountry] = useState(initialCountry);
   const [daysCount, setDaysCount] = useState<number | null>(null);
-  const [budgetLevel, setBudgetLevel] = useState<'low' | 'mid' | 'high' | null>(null);
+  const [budgetLevel, setBudgetLevel] = useState<'very-low' | 'low' | 'mid' | 'high' | null>(null);
   const [pacePreference, setPacePreference] = useState<'relaxed' | 'moderate' | 'packed' | null>(null);
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [customNotes, setCustomNotes] = useState('');
@@ -192,9 +192,9 @@ export function SearchWindow({
   };
 
   return (
-    <div className="min-h-screen bg-[#e1ecf7] text-slate-800 antialiased flex flex-col font-sans">
+    <div className="h-screen overflow-hidden bg-[#e1ecf7] text-slate-800 antialiased flex flex-col font-sans">
       {/* Top Navbar */}
-      <header className="sticky top-0 z-40 bg-[#e1ecf7]/85 backdrop-blur-xl border-b border-white/40 shadow-sm">
+      <header className="sticky top-0 z-40 bg-[#e1ecf7]/85 backdrop-blur-xl border-b border-white/40 shadow-sm shrink-0">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 grid grid-cols-3 items-center">
           <div className="flex justify-start">
             <button
@@ -220,24 +220,21 @@ export function SearchWindow({
       </header>
 
       {/* Main Content Area */}
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10 w-full flex-1">
-        {/* Title & Introduction */}
-        <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-medium text-[#2d497c] tracking-wide">
-            Customize Your Travel Plan
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Specify your destination, pace, interests, and budget to generate an optimized itinerary with exact stops and coordinates.
-          </p>
-        </div>
-
+      <main className="w-full sm:w-[90%] max-w-none mx-auto px-4 sm:px-6 py-[3vh] sm:py-[5vh] flex-1 flex flex-col">
         {/* Search & Customization Form */}
         <form
           onSubmit={handleGenerate}
-          className="bg-white/90 backdrop-blur-lg rounded-3xl border border-white p-6 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-7"
+          className="w-full h-full bg-white/90 backdrop-blur-lg rounded-sm border border-white p-5 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between"
         >
+          {/* Title & Introduction */}
+          <div className="text-center shrink-0">
+            <h1 className="text-xl sm:text-2xl font-medium text-[#2d497c] tracking-wide">
+              Customize Your Travel Plan
+            </h1>
+          </div>
+
           {/* Destination Fields */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5 text-blue-600" />
@@ -252,7 +249,7 @@ export function SearchWindow({
                   setErrorMsg(null);
                 }}
                 placeholder="e.g. Jaipur, Lucknow, Noida, Rome"
-                className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200 shadow-inner rounded-2xl text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all"
+                className="w-full px-3 py-2 sm:py-2.5 bg-slate-50/50 border border-slate-200 shadow-inner rounded-sm text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all"
               />
             </div>
 
@@ -265,100 +262,90 @@ export function SearchWindow({
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="e.g. India, Japan, Italy"
-                className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200 shadow-inner rounded-2xl text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all"
+                className="w-full px-3 py-2 sm:py-2.5 bg-slate-50/50 border border-slate-200 shadow-inner rounded-sm text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all"
               />
             </div>
           </div>
 
-          {/* Trip Duration Selector */}
-          <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2 flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-blue-600" />
-              <span>Trip Duration (Days)</span>
-            </label>
-            <div className="grid grid-cols-5 gap-2">
-              {[1, 2, 3, 4, 5].map((d) => (
-                <button
-                  key={d}
-                  type="button"
-                  onClick={() => setDaysCount(d)}
-                  className={`py-2 rounded-xl text-xs font-bold border transition cursor-pointer ${
-                    daysCount === d
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-2xs'
-                      : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                  }`}
-                >
-                  {d} {d === 1 ? 'Day' : 'Days'}
-                </button>
-              ))}
+          {/* Preferences Grid (Duration, Budget, Pace) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {/* Trip Duration Selector */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5 text-blue-600" />
+                <span>Duration (Days)</span>
+              </label>
+              <select
+                value={daysCount || ''}
+                onChange={(e) => setDaysCount(Number(e.target.value))}
+                className="w-full px-3 py-2 sm:py-2.5 bg-slate-50/50 border border-slate-200 shadow-inner rounded-sm text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all cursor-pointer"
+              >
+                <option value="" disabled>Select Duration</option>
+                {[1, 2, 3, 4, 5].map((d) => (
+                  <option key={d} value={d}>
+                    {d} {d === 1 ? 'Day' : 'Days'}
+                  </option>
+                ))}
+              </select>
             </div>
-          </div>
 
-          {/* Budget Tier Selector */}
-          <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2 flex items-center gap-1.5">
-              <DollarSign className="w-3.5 h-3.5 text-blue-600" />
-              <span>Budget Tier</span>
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { id: 'low', label: 'Budget ($ / ₹)', desc: 'Hostels, street food & free sites' },
-                { id: 'mid', label: 'Mid-Range ($$ / ₹₹)', desc: 'Boutique stays, casual bistros' },
-                { id: 'high', label: 'Luxury ($$$ / ₹₹₹)', desc: '5-star resorts, fine dining' },
-              ].map((tier) => (
-                <button
-                  key={tier.id}
-                  type="button"
-                  onClick={() => setBudgetLevel(tier.id as any)}
-                  className={`p-3 rounded-xl text-left border transition cursor-pointer flex flex-col justify-between ${
-                    budgetLevel === tier.id
-                      ? 'bg-blue-50 border-blue-500 text-blue-900 ring-2 ring-blue-500/20'
-                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
-                  }`}
-                >
-                  <span className="text-xs font-bold">{tier.label}</span>
-                  <span className="text-[10px] text-slate-500 mt-1">{tier.desc}</span>
-                </button>
-              ))}
+            {/* Budget Tier Selector */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+                <DollarSign className="w-3.5 h-3.5 text-blue-600" />
+                <span>Budget Tier</span>
+              </label>
+              <select
+                value={budgetLevel || ''}
+                onChange={(e) => setBudgetLevel(e.target.value as any)}
+                className="w-full px-3 py-2 sm:py-2.5 bg-slate-50/50 border border-slate-200 shadow-inner rounded-sm text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all cursor-pointer"
+              >
+                <option value="" disabled>Select Budget Tier</option>
+                {[
+                  { id: 'very-low', label: 'Under ₹5,000 / day' },
+                  { id: 'low', label: '₹5,000 - ₹10,000 / day' },
+                  { id: 'mid', label: '₹10,000 - ₹15,000 / day' },
+                  { id: 'high', label: '₹15,000+ / day' },
+                ].map((tier) => (
+                  <option key={tier.id} value={tier.id}>
+                    {tier.label}
+                  </option>
+                ))}
+              </select>
             </div>
-          </div>
 
-          {/* Pace Preference */}
-          <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2 flex items-center gap-1.5">
-              <Gauge className="w-3.5 h-3.5 text-blue-600" />
-              <span>Pace Preference</span>
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { id: 'relaxed', label: 'Relaxed Pace', desc: '2–3 stops per day, plenty of leisure' },
-                { id: 'moderate', label: 'Moderate (Standard)', desc: '3–4 clustered stops, balanced' },
-                { id: 'packed', label: 'Packed / Intensive', desc: '4–5 stops, see maximum highlights' },
-              ].map((pace) => (
-                <button
-                  key={pace.id}
-                  type="button"
-                  onClick={() => setPacePreference(pace.id as any)}
-                  className={`p-3 rounded-xl text-left border transition cursor-pointer flex flex-col justify-between ${
-                    pacePreference === pace.id
-                      ? 'bg-blue-50 border-blue-500 text-blue-900 ring-2 ring-blue-500/20'
-                      : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
-                  }`}
-                >
-                  <span className="text-xs font-bold">{pace.label}</span>
-                  <span className="text-[10px] text-slate-500 mt-1">{pace.desc}</span>
-                </button>
-              ))}
+            {/* Pace Preference */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
+                <Gauge className="w-3.5 h-3.5 text-blue-600" />
+                <span>Pace Preference</span>
+              </label>
+              <select
+                value={pacePreference || ''}
+                onChange={(e) => setPacePreference(e.target.value as any)}
+                className="w-full px-3 py-2 sm:py-2.5 bg-slate-50/50 border border-slate-200 shadow-inner rounded-sm text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all cursor-pointer"
+              >
+                <option value="" disabled>Select Pace</option>
+                {[
+                  { id: 'relaxed', label: 'Relaxed Pace (2–3 stops, plenty of leisure)' },
+                  { id: 'moderate', label: 'Moderate (3–4 clustered stops, balanced)' },
+                  { id: 'packed', label: 'Packed (4–5 stops, maximum highlights)' },
+                ].map((pace) => (
+                  <option key={pace.id} value={pace.id}>
+                    {pace.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
           {/* Key Interests Tags */}
           <div>
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5 flex items-center gap-1.5">
               <SlidersHorizontal className="w-3.5 h-3.5 text-blue-600" />
               <span>Key Interests & Themes</span>
             </label>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {INTEREST_OPTIONS.map((interest) => {
                 const isSelected = selectedInterests.includes(interest);
                 return (
@@ -366,7 +353,7 @@ export function SearchWindow({
                     key={interest}
                     type="button"
                     onClick={() => toggleInterest(interest)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition cursor-pointer flex items-center gap-1.5 ${
+                    className={`px-3 py-1 rounded-sm text-[14px] font-medium border transition cursor-pointer flex items-center gap-1.5 ${
                       isSelected
                         ? 'bg-slate-900 text-white border-slate-900 font-semibold'
                         : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
@@ -386,17 +373,17 @@ export function SearchWindow({
               Special Requests or Notes (Optional)
             </label>
             <textarea
-              rows={2}
+              rows={1}
               value={customNotes}
               onChange={(e) => setCustomNotes(e.target.value)}
-              placeholder="e.g. Vegetarian food preferences, traveling with senior parents, prefer rooftop cafes..."
-              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-500 transition resize-none"
+              placeholder="e.g. Vegetarian food preferences..."
+              className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-sm text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-500 transition resize-none"
             />
           </div>
 
           {/* Error Message */}
           {errorMsg && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-sm text-xs text-red-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div className="flex items-start gap-2.5">
                 <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                 <div>
@@ -408,7 +395,7 @@ export function SearchWindow({
                 <button
                   type="button"
                   onClick={handleLoadInstantPreset}
-                  className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold text-xs shrink-0 transition cursor-pointer self-start sm:self-auto"
+                  className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-sm font-bold text-xs shrink-0 transition cursor-pointer self-start sm:self-auto"
                 >
                   Load {matchedPreset.city} Itinerary
                 </button>
@@ -418,7 +405,7 @@ export function SearchWindow({
 
           {/* Progress / Loading Indicator */}
           {loading && (
-            <div className="p-5 bg-blue-50 border border-blue-200 rounded-2xl space-y-3">
+            <div className="p-5 bg-blue-50 border border-blue-200 rounded-sm space-y-3">
               <div className="flex items-center gap-3">
                 <Loader2 className="w-5 h-5 text-blue-600 animate-spin" />
                 <div>
@@ -440,11 +427,11 @@ export function SearchWindow({
           )}
 
           {/* Submit Action */}
-          <div className="pt-2 flex items-center justify-between gap-3">
+          <div className="flex items-center justify-between gap-3 shrink-0">
             <button
               type="button"
               onClick={onBackToHome}
-              className="px-4 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-semibold rounded-xl transition cursor-pointer"
+              className="px-4 py-2 border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-semibold rounded-sm transition cursor-pointer"
             >
               Cancel
             </button>
@@ -452,7 +439,7 @@ export function SearchWindow({
             <button
               type="submit"
               disabled={loading}
-              className="px-8 py-3.5 bg-[#2d497c] hover:bg-blue-600 disabled:opacity-50 text-white text-xs sm:text-sm font-bold rounded-full shadow-lg transition-all flex items-center gap-2 cursor-pointer active:scale-95"
+              className="px-8 py-2.5 bg-[#2d497c] hover:bg-blue-600 disabled:opacity-50 text-white text-xs sm:text-sm font-bold rounded-full shadow-lg transition-all flex items-center gap-2 cursor-pointer active:scale-95"
             >
               {loading ? (
                 <>

@@ -11,10 +11,10 @@ export function StaysSection({ stays, city }: StaysSectionProps) {
   if (!stays || stays.length === 0) return null;
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
+    <div className="rounded-sm border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center shadow-xs">
+          <div className="w-8 h-8 rounded-sm bg-indigo-600 text-white flex items-center justify-center shadow-xs">
             <BedDouble className="w-4 h-4" />
           </div>
           <div>
@@ -32,7 +32,7 @@ export function StaysSection({ stays, city }: StaysSectionProps) {
         {stays.map((stay, idx) => (
           <div
             key={idx}
-            className="flex flex-col justify-between rounded-xl border border-slate-200/80 p-4 bg-slate-50/50 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 shadow-2xs"
+            className="flex flex-col justify-between rounded-sm border border-slate-200/80 p-4 bg-slate-50/50 hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 shadow-2xs"
           >
             <div>
               <div className="flex items-start justify-between gap-1 mb-1.5">

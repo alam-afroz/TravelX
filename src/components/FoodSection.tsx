@@ -12,10 +12,10 @@ export function FoodSection({ foodSpots, dayNumber, city }: FoodSectionProps) {
   if (!foodSpots || foodSpots.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-orange-200/80 bg-linear-to-br from-orange-50/50 to-amber-50/30 p-4">
+    <div className="rounded-sm border border-orange-200/80 bg-linear-to-br from-orange-50/50 to-amber-50/30 p-4">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-orange-500 text-white flex items-center justify-center shadow-xs">
+          <div className="w-7 h-7 rounded-sm bg-orange-500 text-white flex items-center justify-center shadow-xs">
             <Utensils className="w-3.5 h-3.5" />
           </div>
           <div>
@@ -33,7 +33,7 @@ export function FoodSection({ foodSpots, dayNumber, city }: FoodSectionProps) {
         {foodSpots.map((spot, idx) => (
           <div
             key={idx}
-            className="bg-white rounded-lg p-3 border border-orange-100 shadow-2xs hover:shadow-xs transition"
+            className="bg-white rounded-sm p-3 border border-orange-100 shadow-2xs hover:shadow-xs transition"
           >
             <div className="flex items-start justify-between gap-1 mb-1">
               <div>

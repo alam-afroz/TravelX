@@ -217,12 +217,12 @@ export function MapView({
   };
 
   return (
-    <div className="relative w-full h-full min-h-[380px] rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-100 dark:bg-slate-900">
+    <div className="relative w-full h-full min-h-[380px] rounded-sm overflow-hidden border border-slate-200 shadow-inner bg-slate-100 dark:bg-slate-900">
       <div ref={mapContainerRef} className="w-full h-full min-h-[380px] z-0" />
 
       {/* Floating Map Controls */}
       <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
-        <div className="flex flex-col bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-xl shadow-md border border-slate-200/80 dark:border-slate-700 overflow-hidden">
+        <div className="flex flex-col bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-sm shadow-md border border-slate-200/80 dark:border-slate-700 overflow-hidden">
           <button
             onClick={handleZoomIn}
             className="p-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition"
@@ -244,7 +244,7 @@ export function MapView({
 
         <button
           onClick={handleResetBounds}
-          className="p-2 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-xl shadow-md border border-slate-200/80 dark:border-slate-700 transition flex items-center justify-center"
+          className="p-2 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-sm shadow-md border border-slate-200/80 dark:border-slate-700 transition flex items-center justify-center"
           title="Center on stops"
           aria-label="Fit stops in view"
         >
@@ -253,7 +253,7 @@ export function MapView({
       </div>
 
       {/* Map Legend Overlay */}
-      <div className="absolute bottom-3 left-3 z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm px-3 py-2 rounded-xl shadow-md border border-slate-200/80 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 max-w-[280px]">
+      <div className="absolute bottom-3 left-3 z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm px-3 py-2 rounded-sm shadow-md border border-slate-200/80 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 max-w-[280px]">
         <div className="flex items-center gap-1.5 font-semibold text-slate-900 dark:text-slate-100 mb-1.5">
           <MapPin className="w-3.5 h-3.5 text-blue-600" />
           <span>Geographic Proximity Route</span>

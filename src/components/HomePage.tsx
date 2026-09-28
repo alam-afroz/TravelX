@@ -1,23 +1,24 @@
 import { useState, useEffect } from 'react';
 import {
-  Compass,
   MapPin,
   Utensils,
   Train,
   Layers,
   ArrowRight,
-  Sparkles,
-  ChevronRight
+  ChevronRight,
+  Zap,
+  CalendarDays,
+  Map,
+  Wallet
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { PRESET_ITINERARIES } from '../data/presets.ts';
 import { Itinerary } from '../types.ts';
-import ladakhBg from '../assets/ladakh.png';
-import hero1 from '../assets/WhatsApp Image 2026-09-28 at 6.04.10 PM (1).jpeg';
-import hero2 from '../assets/WhatsApp Image 2026-09-28 at 6.04.10 PM.jpeg';
-import hero3 from '../assets/WhatsApp Image 2026-09-28 at 6.04.11 PM.jpeg';
+import slide1 from '../assets/hero_section/ladakh.png';
+import slide2 from '../assets/hero_section/ghat.jpg';
+import searchImg from '../assets/search.png';
 
-const HERO_IMAGES = [ladakhBg, hero1, hero2, hero3];
+const HERO_IMAGES = [slide1, slide2];
 
 interface HomePageProps {
   onStartSearch: (initialCity?: string, initialCountry?: string) => void;
@@ -147,81 +148,76 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
             Want to Plan your Travel without Switching Tabs ??
           </motion.h2>
           
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-            {/* Visual Area */}
-            <motion.div 
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative w-full lg:w-1/2 h-[450px] mx-auto group perspective-1000"
-            >
-              {/* Back card (White) */}
+          <div className="flex flex-col gap-24 lg:gap-0">
+            
+            {/* Row 1: Image Left, Text Right */}
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative z-0">
+              {/* Image */}
               <motion.div 
-                whileHover={{ y: -4 }}
-                className="absolute top-0 left-0 w-[85%] h-[320px] bg-white/90 backdrop-blur-xl rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-white flex flex-col p-8 z-10 transition-all duration-500 overflow-hidden"
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="w-full lg:w-[60%] flex justify-center"
               >
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center shadow-inner"><MapPin className="w-6 h-6 text-blue-500"/></div>
-                  <div className="h-5 w-48 bg-slate-100 rounded-full animate-pulse"></div>
-                </div>
-                <div className="flex-1 w-full bg-slate-50/50 rounded-2xl border border-slate-100 flex flex-col gap-5 p-6">
-                   <div className="h-4 w-full bg-slate-200 rounded-full"></div>
-                   <div className="h-4 w-3/4 bg-slate-200 rounded-full"></div>
-                   <div className="h-4 w-5/6 bg-slate-200 rounded-full"></div>
-                   <div className="mt-auto flex justify-between items-center pt-6 border-t border-slate-100">
-                      <div className="h-10 w-32 bg-blue-100/50 rounded-xl"></div>
-                      <div className="h-10 w-10 bg-slate-200 rounded-full"></div>
-                   </div>
-                </div>
+                <img 
+                  src={searchImg} 
+                  alt="Search interface preview" 
+                  className="w-full rounded-sm shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] border-4 sm:border-8 border-white/90" 
+                />
               </motion.div>
               
-              {/* Front card (Dark Blue/Purple) */}
+              {/* Text */}
               <motion.div 
-                whileHover={{ y: 4 }}
-                className="absolute bottom-0 right-0 w-[85%] h-[340px] bg-gradient-to-br from-[#7483a9] to-[#5a6789] rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.4)] flex flex-col p-8 z-20 transition-all duration-500 border border-white/20 overflow-hidden backdrop-blur-xl"
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="w-full lg:w-[40%] py-2"
               >
-                 <div className="flex justify-between items-center mb-8">
-                   <div className="h-7 w-40 bg-white/20 rounded-full shadow-inner"></div>
-                   <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md">
-                     <Layers className="w-6 h-6 text-white/80" />
-                   </div>
-                 </div>
-                 <div className="flex-1 w-full bg-white/5 rounded-2xl border border-white/10 flex gap-6 p-6 shadow-inner">
-                    <div className="w-1/3 h-full bg-white/10 rounded-xl"></div>
-                    <div className="flex-1 flex flex-col gap-5">
-                       <div className="h-4 w-full bg-white/20 rounded-full"></div>
-                       <div className="h-4 w-4/5 bg-white/20 rounded-full"></div>
-                       <div className="h-4 w-2/3 bg-white/20 rounded-full mt-auto"></div>
-                    </div>
-                 </div>
-                 <div className="mt-8 flex justify-center gap-3">
-                    <div className="h-2 w-10 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
-                    <div className="h-2 w-2 bg-white/30 rounded-full"></div>
-                    <div className="h-2 w-2 bg-white/30 rounded-full"></div>
-                 </div>
+                <h3 className="text-2xl font-semibold text-slate-900 mb-4 tracking-wide leading-snug">
+                  Enter Destination, Days, Budget & Preference
+                </h3>
+                <p className="text-slate-600 leading-relaxed text-lg">
+                  Tell us where you want to go and what you love. Our AI handles the heavy lifting, curating the perfect trip parameters.
+                </p>
               </motion.div>
-            </motion.div>
-            
-            {/* Text Content */}
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="w-full lg:w-1/2 flex flex-col gap-14 lg:pl-10"
-            >
-              <motion.div variants={itemVariants} className="relative">
-                <div className="absolute -left-6 top-2 w-2 h-full bg-blue-500 rounded-full opacity-20" />
-                <h3 className="text-2xl font-semibold text-slate-900 mb-4 tracking-wide">Enter Destination, Days, Budget & Preference</h3>
-                <p className="text-slate-600 leading-relaxed max-w-md text-lg">Tell us where you want to go and what you love. Our AI handles the heavy lifting, curating the perfect trip parameters.</p>
+            </div>
+
+            {/* Row 2: Text Left, Image Right */}
+            <div className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-16 relative z-10">
+              {/* Text */}
+              <motion.div 
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="w-full lg:w-[40%] py-2"
+              >
+                <h3 className="text-2xl font-semibold text-[#2d497c] mb-4 tracking-wide leading-snug">
+                  Get Your Itinerary Plan & Customize it later
+                </h3>
+                <p className="text-slate-600 leading-relaxed text-lg">
+                  Instantly receive a complete travel plan. Swap out restaurants, change hotels, or adjust timelines directly in the visual studio.
+                </p>
               </motion.div>
-              <motion.div variants={itemVariants} className="lg:pl-12 relative">
-                <div className="absolute left-6 lg:left-6 top-2 w-2 h-full bg-indigo-500 rounded-full opacity-20 hidden lg:block" />
-                <h3 className="text-2xl font-semibold text-[#2d497c] mb-4 tracking-wide">Get Your Itinerary Plan & Customize it later</h3>
-                <p className="text-slate-600 leading-relaxed max-w-md text-lg">Instantly receive a complete travel plan. Swap out restaurants, change hotels, or adjust timelines directly in the visual studio.</p>
+              
+              {/* Image */}
+              <motion.div 
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="w-full lg:w-[60%] flex justify-center"
+              >
+                <img 
+                  src={searchImg} 
+                  alt="Customization interface preview" 
+                  className="w-full rounded-sm shadow-[0_20px_50px_-12px_rgba(0,0,0,0.15)] border-4 sm:border-8 border-white/95" 
+                />
               </motion.div>
-            </motion.div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -237,25 +233,50 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-28"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-28"
           >
             {[
-              { icon: MapPin, title: "Geographic Routing", desc: "Stops are sequenced logically by neighborhood so you never waste time crisscrossing the city.", color: "text-blue-600", bg: "bg-blue-50" },
-              { icon: Utensils, title: "Local Experiences", desc: "Two culinary recommendations per day placed right near that day's walking route.", color: "text-amber-600", bg: "bg-amber-50" },
-              { icon: Train, title: "Seamless Transit", desc: "Explore estimated connections, class types, and fares to reach your vacation destination.", color: "text-emerald-600", bg: "bg-emerald-50" }
+              { 
+                icon: Zap, 
+                title: "Personalized in seconds", 
+                desc: "Pick your city, days, interests, and budget, and get a complete plan in one click. No research, no account.", 
+                color: "text-blue-600", 
+                bg: "bg-blue-50" 
+              },
+              { 
+                icon: CalendarDays, 
+                title: "Smart day-by-day plans", 
+                desc: "Each day has a theme, and nearby stops are grouped together, so you spend more time exploring and less time in transit.", 
+                color: "text-indigo-600", 
+                bg: "bg-indigo-50" 
+              },
+              { 
+                icon: Map, 
+                title: "Interactive map", 
+                desc: "See every stop as a numbered pin along your route, so you know where you're going and in what order.", 
+                color: "text-emerald-600", 
+                bg: "bg-emerald-50" 
+              },
+              { 
+                icon: Wallet, 
+                title: "Food, stays, and costs in one place", 
+                desc: "Get local food spots, hotel suggestions matched to your budget, and estimated entry prices for each stop.", 
+                color: "text-amber-600", 
+                bg: "bg-amber-50" 
+              }
             ].map((feature, idx) => (
               <motion.div 
                 key={idx}
                 variants={itemVariants}
                 whileHover={{ y: -4, boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.05)" }}
-                className="bg-white/80 backdrop-blur-lg rounded-[2rem] p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white transition-all text-center flex flex-col items-center group relative overflow-hidden"
+                className="bg-white/80 backdrop-blur-lg rounded-sm p-8 lg:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white transition-all text-center flex flex-col items-center group relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className={`w-16 h-16 ${feature.bg} rounded-2xl flex items-center justify-center ${feature.color} mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300 relative z-10`}>
-                  <feature.icon className="w-8 h-8" />
+                <div className={`w-14 h-14 ${feature.bg} rounded-sm flex items-center justify-center ${feature.color} mb-6 shadow-sm group-hover:scale-110 transition-transform duration-300 relative z-10 shrink-0`}>
+                  <feature.icon className="w-7 h-7" />
                 </div>
-                <h4 className="text-xl font-semibold text-slate-800 mb-4 tracking-wide relative z-10">{feature.title}</h4>
-                <p className="text-slate-500 text-base leading-relaxed relative z-10 font-medium">
+                <h4 className="text-lg font-semibold text-slate-800 mb-3 tracking-wide relative z-10 leading-tight">{feature.title}</h4>
+                <p className="text-slate-500 text-sm leading-relaxed relative z-10 font-medium">
                   {feature.desc}
                 </p>
               </motion.div>
@@ -278,9 +299,9 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
                  { name: 'Jaipur', desc: 'The Pink City', icon: '🏰', color: 'from-pink-500 to-rose-500' },
                  { name: 'Lucknow', desc: 'City of Nawabs', icon: '🕌', color: 'from-amber-500 to-orange-500' },
                  { name: 'Noida', desc: 'Tech & Commerce', icon: '🏢', color: 'from-blue-500 to-cyan-500' },
-                 { name: 'Kyoto', desc: 'Ancient Traditions', icon: '⛩️', color: 'from-red-500 to-rose-600' },
-                 { name: 'Rome', desc: 'Eternal City', icon: '🏛️', color: 'from-stone-500 to-amber-700' },
-                 { name: 'Barcelona', desc: 'Art & Architecture', icon: '🎨', color: 'from-yellow-400 to-orange-500' },
+                 { name: 'Agra', desc: 'City of Taj', icon: '🕌', color: 'from-red-500 to-rose-600' },
+                 { name: 'Pune', desc: 'Oxford of the East', icon: '🎓', color: 'from-stone-500 to-amber-700' },
+                 { name: 'Hyderabad', desc: 'City of Pearls', icon: '💎', color: 'from-yellow-400 to-orange-500' },
                ].map((dest, i) => (
                   <motion.div 
                     key={dest.name} 
@@ -289,14 +310,9 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
                     onClick={() => {
-                      const key = dest.name.toLowerCase();
-                      if (PRESET_ITINERARIES[key]) {
-                        onSelectPresetItinerary(PRESET_ITINERARIES[key]);
-                      } else {
-                        onStartSearch(dest.name);
-                      }
+                      onStartSearch(dest.name, 'India');
                     }} 
-                    className="relative bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group flex flex-col items-start text-left overflow-hidden h-52"
+                    className="relative bg-white rounded-sm p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group flex flex-col items-start text-left overflow-hidden h-52"
                   >
                     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${dest.color} rounded-full blur-3xl opacity-10 group-hover:opacity-20 transition-opacity translate-x-1/2 -translate-y-1/2`} />
                     <span className="text-4xl mb-auto relative z-10">{dest.icon}</span>

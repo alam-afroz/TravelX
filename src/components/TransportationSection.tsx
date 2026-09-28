@@ -291,11 +291,11 @@ export function TransportationSection({
   };
 
   return (
-    <section className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+    <section className="bg-white rounded-sm border border-slate-200 overflow-hidden shadow-xs">
       {/* Prominent Header / Toggle Banner */}
       <div className="p-5 sm:p-6 bg-linear-to-r from-slate-900 via-indigo-950 to-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-start sm:items-center gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-400/30 text-blue-300 flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-10 h-10 rounded-sm bg-blue-500/20 border border-blue-400/30 text-blue-300 flex items-center justify-center shrink-0 shadow-xs">
             <Train className="w-5 h-5" />
           </div>
           <div>
@@ -316,7 +316,7 @@ export function TransportationSection({
         {/* Toggle / Open Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-2 self-start sm:self-auto"
+          className="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-sm shadow-md transition flex items-center gap-2 self-start sm:self-auto"
         >
           <span>{isOpen ? 'Hide Options' : `Explore Travel to ${destinationCity}`}</span>
           {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -332,7 +332,7 @@ export function TransportationSection({
               <button
                 type="button"
                 onClick={() => setMode('train')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 ${
+                className={`px-4 py-2 rounded-sm text-xs font-bold transition flex items-center gap-2 ${
                   mode === 'train'
                     ? 'bg-emerald-600 text-white shadow-xs'
                     : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
@@ -345,7 +345,7 @@ export function TransportationSection({
               <button
                 type="button"
                 onClick={() => setMode('flight')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 ${
+                className={`px-4 py-2 rounded-sm text-xs font-bold transition flex items-center gap-2 ${
                   mode === 'flight'
                     ? 'bg-sky-600 text-white shadow-xs'
                     : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
@@ -365,7 +365,7 @@ export function TransportationSection({
           {/* Form */}
           <form
             onSubmit={handleSearch}
-            className="bg-white rounded-xl border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-4"
+            className="bg-white rounded-sm border border-slate-200 p-4 sm:p-5 shadow-2xs space-y-4"
           >
             {mode === 'train' ? (
               /* Train Search Inputs */
@@ -384,7 +384,7 @@ export function TransportationSection({
                       setStartingStation(e.target.value);
                       setErrorMsg(null);
                     }}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-sm focus:outline-none focus:border-blue-500 focus:bg-white"
                   />
                 </div>
 
@@ -400,7 +400,7 @@ export function TransportationSection({
                     placeholder={`e.g. ${destinationCity} Station`}
                     value={destinationStation}
                     onChange={(e) => setDestinationStation(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-sm focus:outline-none focus:border-blue-500 focus:bg-white"
                   />
                 </div>
 
@@ -439,7 +439,7 @@ export function TransportationSection({
                       setJourneyDate(e.target.value);
                       setErrorMsg(null);
                     }}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-sm focus:outline-none focus:border-blue-500 focus:bg-white"
                   />
                 </div>
 
@@ -451,7 +451,7 @@ export function TransportationSection({
                   <select
                     value={quota}
                     onChange={(e) => setQuota(e.target.value as any)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-sm focus:outline-none focus:border-blue-500 focus:bg-white"
                   >
                     <option value="General">General</option>
                     <option value="Tatkal">Tatkal</option>
@@ -467,7 +467,7 @@ export function TransportationSection({
                   <select
                     value={preferredClass}
                     onChange={(e) => setPreferredClass(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-sm focus:outline-none focus:border-blue-500 focus:bg-white"
                   >
                     <option value="Any">Any Class</option>
                     <option value="SL">SL (Sleeper)</option>
@@ -496,7 +496,7 @@ export function TransportationSection({
                       setDepartureCity(e.target.value);
                       setErrorMsg(null);
                     }}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-sm focus:outline-none focus:border-blue-500 focus:bg-white"
                   />
                 </div>
 
@@ -512,7 +512,7 @@ export function TransportationSection({
                     placeholder={`e.g. ${destinationCity} Airport`}
                     value={arrivalAirport}
                     onChange={(e) => setArrivalAirport(e.target.value)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-sm focus:outline-none focus:border-blue-500 focus:bg-white"
                   />
                 </div>
 
@@ -551,7 +551,7 @@ export function TransportationSection({
                       setJourneyDate(e.target.value);
                       setErrorMsg(null);
                     }}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-sm focus:outline-none focus:border-blue-500 focus:bg-white"
                   />
                 </div>
 
@@ -563,7 +563,7 @@ export function TransportationSection({
                   <select
                     value={cabinClass}
                     onChange={(e) => setCabinClass(e.target.value as any)}
-                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-500 focus:bg-white"
+                    className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-sm focus:outline-none focus:border-blue-500 focus:bg-white"
                   >
                     <option value="Economy">Economy</option>
                     <option value="Premium Economy">Premium Economy</option>
@@ -582,7 +582,7 @@ export function TransportationSection({
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white text-xs font-bold rounded-lg transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white text-xs font-bold rounded-sm transition flex items-center gap-1.5 shadow-xs cursor-pointer"
               >
                 {loading ? (
                   <>
@@ -600,7 +600,7 @@ export function TransportationSection({
           </form>
 
           {/* Mandatory Prominent Disclaimer Notice */}
-          <div className="p-3.5 bg-amber-50/90 border border-amber-200/90 rounded-xl flex items-start gap-2.5 text-amber-900 text-xs">
+          <div className="p-3.5 bg-amber-50/90 border border-amber-200/90 rounded-sm flex items-start gap-2.5 text-amber-900 text-xs">
             <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <div>
               <p className="font-bold text-amber-950">
@@ -614,7 +614,7 @@ export function TransportationSection({
 
           {/* Error Message if search failed */}
           {errorMsg && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-center gap-2">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-sm text-xs text-red-700 flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
               <span>{errorMsg}</span>
             </div>
@@ -625,7 +625,7 @@ export function TransportationSection({
             {mode === 'train' ? (
               !hasSearchedTrain ? (
                 /* Unsearched Prompt for Train */
-                <div className="p-8 text-center bg-white rounded-xl border border-dashed border-slate-300 text-slate-500">
+                <div className="p-8 text-center bg-white rounded-sm border border-dashed border-slate-300 text-slate-500">
                   <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-3">
                     <Train className="w-6 h-6" />
                   </div>
@@ -653,7 +653,7 @@ export function TransportationSection({
                       {trainResults.map((train) => (
                         <div
                           key={train.id || train.number}
-                          className="bg-white rounded-xl border border-slate-200 p-4.5 shadow-2xs hover:border-slate-300 transition flex flex-col justify-between"
+                          className="bg-white rounded-sm border border-slate-200 p-4.5 shadow-2xs hover:border-slate-300 transition flex flex-col justify-between"
                         >
                           <div>
                             {/* Header: Name, Number */}
@@ -682,7 +682,7 @@ export function TransportationSection({
                             </div>
 
                             {/* Schedule times */}
-                            <div className="flex items-center justify-between bg-slate-50 rounded-lg p-2.5 border border-slate-150 text-xs mb-3">
+                            <div className="flex items-center justify-between bg-slate-50 rounded-sm p-2.5 border border-slate-150 text-xs mb-3">
                               <div>
                                 <span className="text-[10px] uppercase font-bold text-slate-400 block">
                                   Departure
@@ -712,7 +712,7 @@ export function TransportationSection({
                                     key={cls.className}
                                     type="button"
                                     onClick={() => handleViewDetails(train, cls.className)}
-                                    className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-medium border border-slate-200 transition cursor-pointer"
+                                    className="flex items-center gap-1.5 px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-sm text-xs font-medium border border-slate-200 transition cursor-pointer"
                                     title="Click to view class details"
                                   >
                                     <span className="font-bold text-slate-900">{cls.className}</span>
@@ -730,7 +730,7 @@ export function TransportationSection({
                             </span>
                             <button
                               onClick={() => handleViewDetails(train, preferredClass !== 'Any' ? preferredClass : undefined)}
-                              className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold rounded-lg border border-blue-200 transition flex items-center gap-1 cursor-pointer"
+                              className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold rounded-sm border border-blue-200 transition flex items-center gap-1 cursor-pointer"
                             >
                               <span>View Details</span>
                               <ArrowRight className="w-3 h-3" />
@@ -740,7 +740,7 @@ export function TransportationSection({
                       ))}
                     </div>
                   ) : (
-                    <div className="p-8 text-center bg-white rounded-xl border border-slate-200 text-slate-500 text-xs">
+                    <div className="p-8 text-center bg-white rounded-sm border border-slate-200 text-slate-500 text-xs">
                       No train options found for this route. Please try another starting station or date.
                     </div>
                   )}
@@ -749,7 +749,7 @@ export function TransportationSection({
             ) : (
               !hasSearchedFlight ? (
                 /* Unsearched Prompt for Flight */
-                <div className="p-8 text-center bg-white rounded-xl border border-dashed border-slate-300 text-slate-500">
+                <div className="p-8 text-center bg-white rounded-sm border border-dashed border-slate-300 text-slate-500">
                   <div className="w-12 h-12 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center mx-auto mb-3">
                     <Plane className="w-6 h-6" />
                   </div>
@@ -777,7 +777,7 @@ export function TransportationSection({
                       {flightResults.map((flight) => (
                         <div
                           key={flight.id || flight.flightNumber}
-                          className="bg-white rounded-xl border border-slate-200 p-4.5 shadow-2xs hover:border-slate-300 transition flex flex-col justify-between"
+                          className="bg-white rounded-sm border border-slate-200 p-4.5 shadow-2xs hover:border-slate-300 transition flex flex-col justify-between"
                         >
                           <div>
                             {/* Header: Airline, Flight No */}
@@ -806,7 +806,7 @@ export function TransportationSection({
                             </div>
 
                             {/* Times */}
-                            <div className="flex items-center justify-between bg-slate-50 rounded-lg p-2.5 border border-slate-150 text-xs mb-3">
+                            <div className="flex items-center justify-between bg-slate-50 rounded-sm p-2.5 border border-slate-150 text-xs mb-3">
                               <div>
                                 <span className="text-[10px] uppercase font-bold text-slate-400 block">
                                   Departs
@@ -841,7 +841,7 @@ export function TransportationSection({
                           <div className="pt-3 border-t border-slate-100 flex items-center justify-end">
                             <button
                               onClick={() => handleViewDetails(flight, flight.cabinClass)}
-                              className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold rounded-lg border border-blue-200 transition flex items-center gap-1 cursor-pointer"
+                              className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold rounded-sm border border-blue-200 transition flex items-center gap-1 cursor-pointer"
                             >
                               <span>View Details</span>
                               <ArrowRight className="w-3 h-3" />
@@ -851,7 +851,7 @@ export function TransportationSection({
                       ))}
                     </div>
                   ) : (
-                    <div className="p-8 text-center bg-white rounded-xl border border-slate-200 text-slate-500 text-xs">
+                    <div className="p-8 text-center bg-white rounded-sm border border-slate-200 text-slate-500 text-xs">
                       No flight options found for this route. Please try another departure city or date.
                     </div>
                   )}

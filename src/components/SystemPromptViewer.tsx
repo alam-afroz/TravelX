@@ -73,10 +73,10 @@ export function SystemPromptViewer() {
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-xs">
+    <div className="rounded-sm border border-slate-200 bg-white p-5 shadow-xs">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center">
+          <div className="w-8 h-8 rounded-sm bg-indigo-600 text-white flex items-center justify-center">
             <Terminal className="w-4 h-4" />
           </div>
           <div>
@@ -91,7 +91,7 @@ export function SystemPromptViewer() {
 
         <button
           onClick={handleCopy}
-          className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-lg transition flex items-center gap-1.5 shadow-xs"
+          className="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-sm transition flex items-center gap-1.5 shadow-xs"
         >
           {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
           {copied ? 'Copied Prompt!' : 'Copy System Prompt'}
@@ -99,7 +99,7 @@ export function SystemPromptViewer() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-        <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+        <div className="p-3 rounded-sm bg-slate-50 border border-slate-200/80">
           <div className="flex items-center gap-1.5 font-semibold text-xs text-slate-800 mb-1">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
             <span>Strict Geo-Proximity</span>
@@ -108,7 +108,7 @@ export function SystemPromptViewer() {
             3-4 stops per day in visiting order so days do not zigzag across the city.
           </p>
         </div>
-        <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+        <div className="p-3 rounded-sm bg-slate-50 border border-slate-200/80">
           <div className="flex items-center gap-1.5 font-semibold text-xs text-slate-800 mb-1">
             <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
             <span>Real Places & Currency</span>
@@ -117,7 +117,7 @@ export function SystemPromptViewer() {
             Real landmarks only, 4 decimal places lat/lng coordinates, accurate admission fees.
           </p>
         </div>
-        <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+        <div className="p-3 rounded-sm bg-slate-50 border border-slate-200/80">
           <div className="flex items-center gap-1.5 font-semibold text-xs text-slate-800 mb-1">
             <CheckCircle2 className="w-3.5 h-3.5 text-purple-600" />
             <span>Pure JSON Output</span>
@@ -128,7 +128,7 @@ export function SystemPromptViewer() {
         </div>
       </div>
 
-      <div className="relative rounded-xl bg-slate-950 p-4 font-mono text-xs text-slate-300 overflow-x-auto max-h-[460px] leading-relaxed">
+      <div className="relative rounded-sm bg-slate-950 p-4 font-mono text-xs text-slate-300 overflow-x-auto max-h-[460px] leading-relaxed">
         <pre className="text-amber-300">
           <code>{SYSTEM_PROMPT_TEXT}</code>
         </pre>

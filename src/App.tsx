@@ -179,7 +179,7 @@ export default function App() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => navigateTo('home')}
-              className="p-2 -ml-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+              className="p-2 -ml-2 text-slate-500 hover:text-slate-900 rounded-sm hover:bg-slate-100 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
               title="Return to Home Page"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -225,7 +225,7 @@ export default function App() {
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* Destination Header Banner */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white p-6 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        <div className="bg-white/80 backdrop-blur-xl rounded-sm border border-white p-6 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
@@ -269,7 +269,7 @@ export default function App() {
                     setSelectedDayNumber(d.day);
                     setActiveStopName(null);
                   }}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-2 ${
+                  className={`px-4 py-2.5 rounded-sm text-xs font-bold whitespace-nowrap transition flex items-center gap-2 ${
                     selectedDayNumber === d.day
                       ? 'bg-blue-600 text-white shadow-xs'
                       : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
@@ -294,7 +294,7 @@ export default function App() {
                   setSelectedDayNumber('all');
                   setActiveStopName(null);
                 }}
-                className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 ${
+                className={`px-4 py-2.5 rounded-sm text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 ${
                   selectedDayNumber === 'all'
                     ? 'bg-slate-900 text-white shadow-xs'
                     : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
@@ -312,7 +312,7 @@ export default function App() {
                 {selectedDayNumber !== 'all' && currentDay ? (
                   <div className="space-y-4">
                     {/* Day Theme Banner */}
-                    <div className="bg-white/80 backdrop-blur-md rounded-2xl border border-white p-5 shadow-sm">
+                    <div className="bg-white/80 backdrop-blur-md rounded-sm border border-white p-5 shadow-sm">
                       <div className="flex items-center gap-2 text-xs font-bold text-blue-600 mb-1">
                         <span>Day {currentDay.day} Theme</span>
                       </div>
@@ -354,7 +354,7 @@ export default function App() {
                     {itinerary.days.map((dayPlan) => (
                       <div
                         key={dayPlan.day}
-                        className="bg-white/80 backdrop-blur-md rounded-3xl border border-white p-6 space-y-5 shadow-sm"
+                        className="bg-white/80 backdrop-blur-md rounded-sm border border-white p-6 space-y-5 shadow-sm"
                       >
                         <div className="flex items-center justify-between border-b pb-4">
                           <div>
@@ -399,7 +399,7 @@ export default function App() {
 
               {/* Right Column: Sticky Interactive Map */}
               <div className="lg:col-span-5 sticky top-22">
-                <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                <div className="bg-white/80 backdrop-blur-xl rounded-sm border border-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                   <div className="flex items-center justify-between px-2 py-1 mb-2">
                     <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
                       <MapPin className="w-3.5 h-3.5 text-blue-600" />

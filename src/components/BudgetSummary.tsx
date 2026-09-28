@@ -22,7 +22,7 @@ export function BudgetSummary({ itinerary }: BudgetSummaryProps) {
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
       {/* Metric 1: Est. Entry Fees */}
-      <div className="bg-white rounded-xl border border-slate-200/80 p-3.5 shadow-2xs">
+      <div className="bg-white rounded-sm border border-slate-200/80 p-3.5 shadow-2xs">
         <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-1">
           <Coins className="w-3.5 h-3.5 text-amber-500" />
           <span>Est. Entry Fees</span>
@@ -42,7 +42,7 @@ export function BudgetSummary({ itinerary }: BudgetSummaryProps) {
       </div>
 
       {/* Metric 2: Exploration Hours */}
-      <div className="bg-white rounded-xl border border-slate-200/80 p-3.5 shadow-2xs">
+      <div className="bg-white rounded-sm border border-slate-200/80 p-3.5 shadow-2xs">
         <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-1">
           <Clock className="w-3.5 h-3.5 text-blue-500" />
           <span>Total Planned Time</span>
@@ -56,7 +56,7 @@ export function BudgetSummary({ itinerary }: BudgetSummaryProps) {
       </div>
 
       {/* Metric 3: Planned Stops */}
-      <div className="bg-white rounded-xl border border-slate-200/80 p-3.5 shadow-2xs">
+      <div className="bg-white rounded-sm border border-slate-200/80 p-3.5 shadow-2xs">
         <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-1">
           <MapPin className="w-3.5 h-3.5 text-emerald-500" />
           <span>Curated Stops</span>
@@ -70,7 +70,7 @@ export function BudgetSummary({ itinerary }: BudgetSummaryProps) {
       </div>
 
       {/* Metric 4: Category Distribution */}
-      <div className="bg-white rounded-xl border border-slate-200/80 p-3.5 shadow-2xs">
+      <div className="bg-white rounded-sm border border-slate-200/80 p-3.5 shadow-2xs">
         <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-1">
           <Sparkles className="w-3.5 h-3.5 text-purple-500" />
           <span>Experience Mix</span>
