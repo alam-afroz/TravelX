@@ -195,8 +195,8 @@ export function SearchWindow({
     <div className="min-h-screen bg-[#e1ecf7] text-slate-800 antialiased flex flex-col font-sans">
       {/* Top Navbar */}
       <header className="sticky top-0 z-40 bg-[#e1ecf7]/85 backdrop-blur-xl border-b border-white/40 shadow-sm">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 grid grid-cols-3 items-center">
+          <div className="flex justify-start">
             <button
               onClick={onBackToHome}
               className="p-2 -ml-2 text-slate-500 hover:text-slate-900 rounded-full hover:bg-slate-100 transition flex items-center cursor-pointer"
@@ -204,12 +204,17 @@ export function SearchWindow({
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <span className="text-slate-300">|</span>
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-lg text-[#2d497c] tracking-tight italic">
-                TravelX
-              </span>
-            </div>
+          </div>
+          <div className="flex justify-center">
+            <button 
+              onClick={onBackToHome}
+              className="font-medium text-2xl text-[#2d497c] tracking-wide hover:opacity-80 transition-opacity cursor-pointer"
+            >
+              TravelX
+            </button>
+          </div>
+          <div className="flex justify-end">
+            {/* Empty for layout balance */}
           </div>
         </div>
       </header>
@@ -218,7 +223,7 @@ export function SearchWindow({
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10 w-full flex-1">
         {/* Title & Introduction */}
         <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#2d497c] tracking-tight italic">
+          <h1 className="text-2xl sm:text-3xl font-medium text-[#2d497c] tracking-wide">
             Customize Your Travel Plan
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">

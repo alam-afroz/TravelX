@@ -69,7 +69,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
           </nav>
           
           {/* Center Logo */}
-          <div className="text-3xl font-semibold text-[#2d497c] hover:text-blue-600 transition-colors duration-300 tracking-tight italic select-none flex items-center justify-center cursor-pointer shrink-0">
+          <div className="text-2xl font-medium text-[#2d497c] hover:text-blue-600 transition-colors duration-300 tracking-wide select-none flex items-center justify-center cursor-pointer shrink-0">
             TravelX
           </div>
           
@@ -111,7 +111,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
           >
             <motion.h1 
               variants={itemVariants}
-              className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-10 tracking-tight drop-shadow-2xl text-center italic"
+              className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-10 tracking-wide drop-shadow-xl text-center"
             >
               Your trip, planned in seconds.
             </motion.h1>
@@ -142,7 +142,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-5xl font-extrabold text-center text-slate-900 mb-20 max-w-3xl mx-auto italic drop-shadow-sm"
+            className="text-3xl md:text-4xl font-medium text-center text-slate-900 mb-20 max-w-3xl mx-auto tracking-wide drop-shadow-sm"
           >
             Want to Plan your Travel without Switching Tabs ??
           </motion.h2>
@@ -213,12 +213,12 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
             >
               <motion.div variants={itemVariants} className="relative">
                 <div className="absolute -left-6 top-2 w-2 h-full bg-blue-500 rounded-full opacity-20" />
-                <h3 className="text-3xl font-extrabold text-slate-900 mb-4 italic tracking-tight">Enter Destination, Days, Budget & Preference</h3>
+                <h3 className="text-2xl font-semibold text-slate-900 mb-4 tracking-wide">Enter Destination, Days, Budget & Preference</h3>
                 <p className="text-slate-600 leading-relaxed max-w-md text-lg">Tell us where you want to go and what you love. Our AI handles the heavy lifting, curating the perfect trip parameters.</p>
               </motion.div>
               <motion.div variants={itemVariants} className="lg:pl-12 relative">
                 <div className="absolute left-6 lg:left-6 top-2 w-2 h-full bg-indigo-500 rounded-full opacity-20 hidden lg:block" />
-                <h3 className="text-3xl font-extrabold text-[#2d497c] mb-4 italic tracking-tight">Get Your Itinerary Plan & Customize it later</h3>
+                <h3 className="text-2xl font-semibold text-[#2d497c] mb-4 tracking-wide">Get Your Itinerary Plan & Customize it later</h3>
                 <p className="text-slate-600 leading-relaxed max-w-md text-lg">Instantly receive a complete travel plan. Swap out restaurants, change hotels, or adjust timelines directly in the visual studio.</p>
               </motion.div>
             </motion.div>
@@ -254,7 +254,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
                 <div className={`w-16 h-16 ${feature.bg} rounded-2xl flex items-center justify-center ${feature.color} mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300 relative z-10`}>
                   <feature.icon className="w-8 h-8" />
                 </div>
-                <h4 className="text-xl font-extrabold text-slate-800 mb-4 italic relative z-10">{feature.title}</h4>
+                <h4 className="text-xl font-semibold text-slate-800 mb-4 tracking-wide relative z-10">{feature.title}</h4>
                 <p className="text-slate-500 text-base leading-relaxed relative z-10 font-medium">
                   {feature.desc}
                 </p>
@@ -270,7 +270,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
             transition={{ duration: 0.6 }}
             className="pb-32"
           >
-             <h3 className="text-2xl font-extrabold text-[#2d497c] mb-14 italic flex items-center justify-center gap-3 text-center">
+             <h3 className="text-2xl font-medium text-[#2d497c] mb-14 tracking-wide flex items-center justify-center gap-3 text-center">
                Popular Destinations to Explore
              </h3>
              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
@@ -301,7 +301,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
                     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${dest.color} rounded-full blur-3xl opacity-10 group-hover:opacity-20 transition-opacity translate-x-1/2 -translate-y-1/2`} />
                     <span className="text-4xl mb-auto relative z-10">{dest.icon}</span>
                     <div className="w-full relative z-10">
-                       <h4 className="text-xl font-extrabold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors italic">{dest.name}</h4>
+                       <h4 className="text-xl font-semibold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors tracking-wide">{dest.name}</h4>
                        <div className="flex items-center justify-between">
                          <p className="text-sm text-slate-500 font-medium">{dest.desc}</p>
                          <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-blue-50 flex items-center justify-center transition-colors">
@@ -319,7 +319,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
       {/* Footer */}
       <footer className="bg-slate-900 text-slate-300 py-20 mt-auto border-t-4 border-[#2d497c]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <div className="text-4xl font-black text-white hover:text-blue-400 transition-colors duration-300 tracking-tight italic mb-6 inline-flex items-center gap-2 cursor-pointer">
+          <div className="text-3xl font-medium text-white hover:text-blue-400 transition-colors duration-300 tracking-wide mb-6 inline-flex items-center gap-2 cursor-pointer">
             TravelX
           </div>
           <p className="text-base text-slate-400 mb-10 max-w-md mx-auto leading-relaxed">
