@@ -1,0 +1,6 @@
+{
+  "name": "ItineraryGen - Travel Itinerary Generator",
+  "description": "Generate optimized daily travel itineraries with realistic stops, geographic ordering, entrance fees, local dining, stays, and exact JSON output.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
