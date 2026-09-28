@@ -120,6 +120,14 @@ export function SearchWindow({
       return;
     }
 
+    const targetCity = city.trim().toLowerCase();
+    if (['jaipur', 'lucknow', 'noida'].includes(targetCity) && PRESET_ITINERARIES[targetCity]) {
+      if (daysCount === 2) {
+        onGenerated(PRESET_ITINERARIES[targetCity]);
+        return;
+      }
+    }
+
     setLoading(true);
     setErrorMsg(null);
     setProgressStep(1);

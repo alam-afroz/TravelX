@@ -18,6 +18,13 @@ import slide1 from '../assets/hero_section/ladakh.png';
 import slide2 from '../assets/hero_section/ghat.jpg';
 import searchImg from '../assets/search.png';
 
+import imgJaipur from '../assets/popular_destination/Jaipur.jpg';
+import imgLucknow from '../assets/popular_destination/Lucknow.jpg';
+import imgNoida from '../assets/popular_destination/Noida.jpg';
+import imgAgra from '../assets/popular_destination/agra.jpg';
+import imgPune from '../assets/popular_destination/Pune.jpg';
+import imgHyderabad from '../assets/popular_destination/hyderabad.jpg';
+
 const HERO_IMAGES = [slide1, slide2];
 
 interface HomePageProps {
@@ -296,12 +303,12 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
              </h3>
              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
                {[
-                 { name: 'Jaipur', desc: 'The Pink City', icon: '🏰', color: 'from-pink-500 to-rose-500' },
-                 { name: 'Lucknow', desc: 'City of Nawabs', icon: '🕌', color: 'from-amber-500 to-orange-500' },
-                 { name: 'Noida', desc: 'Tech & Commerce', icon: '🏢', color: 'from-blue-500 to-cyan-500' },
-                 { name: 'Agra', desc: 'City of Taj', icon: '🕌', color: 'from-red-500 to-rose-600' },
-                 { name: 'Pune', desc: 'Oxford of the East', icon: '🎓', color: 'from-stone-500 to-amber-700' },
-                 { name: 'Hyderabad', desc: 'City of Pearls', icon: '💎', color: 'from-yellow-400 to-orange-500' },
+                 { name: 'Jaipur', desc: 'The Pink City', image: imgJaipur },
+                 { name: 'Lucknow', desc: 'City of Nawabs', image: imgLucknow },
+                 { name: 'Noida', desc: 'Tech & Commerce', image: imgNoida },
+                 { name: 'Agra', desc: 'City of Taj', image: imgAgra },
+                 { name: 'Pune', desc: 'Oxford of the East', image: imgPune },
+                 { name: 'Hyderabad', desc: 'City of Pearls', image: imgHyderabad },
                ].map((dest, i) => (
                   <motion.div 
                     key={dest.name} 
@@ -312,16 +319,21 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
                     onClick={() => {
                       onStartSearch(dest.name, 'India');
                     }} 
-                    className="relative bg-white rounded-sm p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group flex flex-col items-start text-left overflow-hidden h-52"
+                    className="relative rounded-sm shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:shadow-2xl hover:-translate-y-1 transition-all cursor-pointer group overflow-hidden h-64"
                   >
-                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${dest.color} rounded-full blur-3xl opacity-10 group-hover:opacity-20 transition-opacity translate-x-1/2 -translate-y-1/2`} />
-                    <span className="text-4xl mb-auto relative z-10">{dest.icon}</span>
-                    <div className="w-full relative z-10">
-                       <h4 className="text-xl font-semibold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors tracking-wide">{dest.name}</h4>
+                    <img 
+                      src={dest.image} 
+                      alt={dest.name}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent" />
+                    
+                    <div className="absolute inset-0 p-6 flex flex-col justify-end text-white z-10">
+                       <h4 className="text-2xl font-semibold mb-1 tracking-wide">{dest.name}</h4>
                        <div className="flex items-center justify-between">
-                         <p className="text-sm text-slate-500 font-medium">{dest.desc}</p>
-                         <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-blue-50 flex items-center justify-center transition-colors">
-                           <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
+                         <p className="text-sm font-medium text-white/80">{dest.desc}</p>
+                         <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm group-hover:bg-white flex items-center justify-center transition-colors">
+                           <ArrowRight className="w-4 h-4 text-white group-hover:text-slate-900 group-hover:translate-x-0.5 transition-all" />
                          </div>
                        </div>
                     </div>
