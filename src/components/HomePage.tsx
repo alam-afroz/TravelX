@@ -71,7 +71,12 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[80px] flex items-center justify-between">
           {/* Left Navigation */}
           <nav className="hidden md:flex items-center gap-10 text-[15px] font-medium text-slate-500 flex-1 justify-start">
-            <button className="hover:text-[#2d497c] transition-colors">Explore</button>
+            <button 
+              onClick={() => document.getElementById('popular-destinations')?.scrollIntoView({ behavior: 'smooth' })}
+              className="hover:text-[#2d497c] transition-colors cursor-pointer"
+            >
+              Explore
+            </button>
             <button onClick={() => onStartSearch()} className="hover:text-[#2d497c] transition-colors font-light text-slate-400">Search</button>
             <button className="hover:text-[#2d497c] transition-colors">About</button>
           </nav>
@@ -292,6 +297,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
           
           {/* Filler/Suggested Places */}
           <motion.div 
+            id="popular-destinations"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}

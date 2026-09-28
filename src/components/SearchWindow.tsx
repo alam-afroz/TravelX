@@ -200,7 +200,7 @@ export function SearchWindow({
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-[#e1ecf7] text-slate-800 antialiased flex flex-col font-sans">
+    <div className="min-h-screen md:h-screen md:overflow-hidden overflow-y-auto bg-[#e1ecf7] text-slate-800 antialiased flex flex-col font-sans">
       {/* Top Navbar */}
       <header className="sticky top-0 z-40 bg-[#e1ecf7]/85 backdrop-blur-xl border-b border-white/40 shadow-sm shrink-0">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 grid grid-cols-3 items-center">
@@ -232,7 +232,7 @@ export function SearchWindow({
         {/* Search & Customization Form */}
         <form
           onSubmit={handleGenerate}
-          className="w-full h-full bg-white/90 backdrop-blur-lg rounded-sm border border-white p-5 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between"
+          className="w-full md:h-full bg-white/90 backdrop-blur-lg rounded-sm border border-white p-5 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col gap-6 md:gap-0 md:justify-between"
         >
           {/* Title & Introduction */}
           <div className="text-center shrink-0">
