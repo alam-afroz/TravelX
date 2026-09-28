@@ -44,7 +44,7 @@ export default function App() {
     return 'home';
   });
 
-  const [searchInit, setSearchInit] = useState({ city: 'Jaipur', country: 'India' });
+  const [searchInit, setSearchInit] = useState({ city: '', country: '' });
   const [itinerary, setItinerary] = useState<Itinerary>(PRESET_ITINERARIES.jaipur);
   const [activeTab, setActiveTab] = useState<'visual' | 'json' | 'prompt'>('visual');
   const [selectedDayNumber, setSelectedDayNumber] = useState<number | 'all'>(1);
@@ -171,9 +171,9 @@ export default function App() {
       : itinerary.days.find((d) => d.day === selectedDayNumber) || itinerary.days[0];
 
   return (
-    <div className="min-h-screen bg-slate-50/70 text-slate-800 antialiased flex flex-col font-sans">
+    <div className="min-h-screen bg-[#e1ecf7] text-slate-800 antialiased flex flex-col font-sans">
       {/* Top Navigation */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+      <header className="sticky top-0 z-40 bg-[#e1ecf7]/85 backdrop-blur-xl border-b border-white/40 shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           {/* Back to Home & Logo */}
           <div className="flex items-center gap-3">
@@ -190,21 +190,18 @@ export default function App() {
 
             <button
               onClick={() => navigateTo('home')}
-              className="flex items-center gap-2.5 text-left cursor-pointer"
+              className="flex items-center gap-2.5 text-left cursor-pointer group"
             >
-              <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-xs">
-                <Compass className="w-4 h-4" />
-              </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-sm text-slate-900 tracking-tight">
+                  <span className="font-extrabold text-lg text-[#2d497c] tracking-tight italic">
                     TravelX
                   </span>
-                  <span className="text-[10px] font-semibold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded-full border border-blue-200">
+                  <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded-full border border-blue-200">
                     Results
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500 font-medium">
+                <p className="text-[11px] text-slate-500 font-medium group-hover:text-slate-700 transition-colors">
                   {itinerary.city}, {itinerary.country}
                 </p>
               </div>
@@ -272,7 +269,7 @@ export default function App() {
                 setSearchInit({ city: itinerary.city, country: itinerary.country });
                 navigateTo('search');
               }}
-              className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 bg-[#2d497c] hover:bg-[#1e293b] text-white text-xs font-bold rounded-full shadow-md transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
             >
               <Search className="w-3.5 h-3.5" />
               <span>New Search</span>
@@ -312,7 +309,7 @@ export default function App() {
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* Destination Header Banner */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xs">
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white p-6 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
@@ -329,7 +326,7 @@ export default function App() {
                   {itinerary.currency}
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              <h1 className="text-3xl sm:text-4xl font-extrabold text-[#2d497c] tracking-tight italic">
                 {itinerary.city} Itinerary
               </h1>
               <p className="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
@@ -436,11 +433,11 @@ export default function App() {
                 {selectedDayNumber !== 'all' && currentDay ? (
                   <div className="space-y-4">
                     {/* Day Theme Banner */}
-                    <div className="bg-white rounded-xl border border-slate-200/90 p-4 shadow-2xs">
+                    <div className="bg-white/80 backdrop-blur-md rounded-2xl border border-white p-5 shadow-sm">
                       <div className="flex items-center gap-2 text-xs font-bold text-blue-600 mb-1">
                         <span>Day {currentDay.day} Theme</span>
                       </div>
-                      <h2 className="text-lg font-extrabold text-slate-900">
+                      <h2 className="text-xl font-extrabold text-slate-900 italic tracking-tight">
                         {currentDay.theme}
                       </h2>
                       <p className="text-xs text-slate-500 mt-0.5">
@@ -478,14 +475,14 @@ export default function App() {
                     {itinerary.days.map((dayPlan) => (
                       <div
                         key={dayPlan.day}
-                        className="bg-white rounded-xl border border-slate-200 p-4.5 space-y-4"
+                        className="bg-white/80 backdrop-blur-md rounded-3xl border border-white p-6 space-y-5 shadow-sm"
                       >
-                        <div className="flex items-center justify-between border-b pb-3">
+                        <div className="flex items-center justify-between border-b pb-4">
                           <div>
                             <span className="text-xs font-bold text-blue-600 uppercase">
                               Day {dayPlan.day}
                             </span>
-                            <h3 className="text-base font-bold text-slate-900">
+                            <h3 className="text-lg font-extrabold text-slate-900 italic tracking-tight">
                               {dayPlan.theme}
                             </h3>
                           </div>
@@ -523,7 +520,7 @@ export default function App() {
 
               {/* Right Column: Sticky Interactive Map */}
               <div className="lg:col-span-5 sticky top-22">
-                <div className="bg-white rounded-2xl border border-slate-200 p-3 shadow-xs">
+                <div className="bg-white/80 backdrop-blur-xl rounded-3xl border border-white p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                   <div className="flex items-center justify-between px-2 py-1 mb-2">
                     <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
                       <MapPin className="w-3.5 h-3.5 text-blue-600" />
@@ -590,32 +587,33 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white py-6 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-800">TravelX</span>
-            <span>—</span>
-            <span>Travel Itinerary Generator strictly adhering to schema constraints</span>
+      <footer className="bg-slate-900 text-slate-300 py-16 mt-16 border-t-4 border-[#2d497c]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-400">
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <div className="font-black text-white hover:text-blue-400 transition-colors duration-300 tracking-tight italic flex items-center gap-2 text-2xl">
+              TravelX
+            </div>
+            <span>AI Travel Itinerary Generator strictly adhering to schema constraints.</span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap justify-center items-center gap-4 font-semibold text-xs">
             <button
               onClick={() => setActiveTab('prompt')}
-              className="hover:text-blue-600 transition font-medium"
+              className="hover:text-white transition-colors"
             >
               System Prompt Specs
             </button>
-            <span>•</span>
+            <span className="text-slate-700">•</span>
             <button
               onClick={() => setActiveTab('json')}
-              className="hover:text-blue-600 transition font-medium"
+              className="hover:text-white transition-colors"
             >
               JSON Schema Export
             </button>
-            <span>•</span>
+            <span className="text-slate-700">•</span>
             <button
               onClick={() => setIsGeneratorOpen(true)}
-              className="text-blue-600 font-bold hover:underline"
+              className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors active:scale-95"
             >
               Generate Itinerary
             </button>

@@ -1,437 +1,332 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Compass,
-  Search,
   MapPin,
-  Calendar,
-  Sparkles,
-  ArrowRight,
-  Shield,
-  Layers,
-  Train,
-  Plane,
   Utensils,
-  Hotel,
-  Clock,
-  CheckCircle2,
-  ChevronRight,
-  Flame,
+  Train,
+  Layers,
+  ArrowRight,
+  Sparkles,
+  ChevronRight
 } from 'lucide-react';
+import { motion } from 'motion/react';
 import { PRESET_ITINERARIES } from '../data/presets.ts';
 import { Itinerary } from '../types.ts';
+import ladakhBg from '../assets/ladakh.png';
+import hero1 from '../assets/WhatsApp Image 2026-09-28 at 6.04.10 PM (1).jpeg';
+import hero2 from '../assets/WhatsApp Image 2026-09-28 at 6.04.10 PM.jpeg';
+import hero3 from '../assets/WhatsApp Image 2026-09-28 at 6.04.11 PM.jpeg';
+
+const HERO_IMAGES = [ladakhBg, hero1, hero2, hero3];
 
 interface HomePageProps {
   onStartSearch: (initialCity?: string, initialCountry?: string) => void;
   onSelectPresetItinerary: (itinerary: Itinerary) => void;
 }
 
-const FEATURED_CITIES = [
-  {
-    key: 'jaipur',
-    city: 'Jaipur',
-    state: 'Rajasthan, India',
-    days: 2,
-    badge: 'Royal Heritage',
-    budget: 'Mid',
-    tagline: 'Amer Fort, royal palaces, handblock printing & spicy kachoris',
-    highlightTags: ['Hilltop Forts', 'Artisan Haveli', 'Bazaar Street Food'],
-    gradient: 'from-amber-500 to-rose-600',
-    bgBadge: 'bg-amber-100 text-amber-800 border-amber-200',
-  },
-  {
-    key: 'lucknow',
-    city: 'Lucknow',
-    state: 'Uttar Pradesh, India',
-    days: 2,
-    badge: 'Nawabi Legacy',
-    budget: 'Mid',
-    tagline: 'Bara Imambara, Chikankari crafts, Galouti kebabs & heritage walks',
-    highlightTags: ['Imambara Marvels', 'Awadhi Kebabs', 'State Museum'],
-    gradient: 'from-emerald-600 to-teal-700',
-    bgBadge: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-  },
-  {
-    key: 'noida',
-    city: 'Noida',
-    state: 'Uttar Pradesh, India',
-    days: 2,
-    badge: 'Modern & Nightlife',
-    budget: 'Mid',
-    tagline: 'Monumental memorials, wetland trails, bustling markets & lively pubs',
-    highlightTags: ['Sandstone Memorial', 'Sector 18 Markets', 'Galleria Lounges'],
-    gradient: 'from-indigo-600 to-purple-700',
-    bgBadge: 'bg-purple-100 text-purple-800 border-purple-200',
-  },
-  {
-    key: 'kyoto',
-    city: 'Kyoto',
-    state: 'Kansai, Japan',
-    days: 3,
-    badge: 'Zen & Temples',
-    budget: 'Mid',
-    tagline: 'Vermilion torii gates, bamboo groves, historic tea houses & gardens',
-    highlightTags: ['Fushimi Inari', 'Arashiyama', 'Gion Historic District'],
-    gradient: 'from-rose-500 to-pink-700',
-    bgBadge: 'bg-rose-100 text-rose-800 border-rose-200',
-  },
-  {
-    key: 'rome',
-    city: 'Rome',
-    state: 'Lazio, Italy',
-    days: 3,
-    badge: 'Ancient Empire',
-    budget: 'Mid',
-    tagline: 'Colosseum gladiators, Vatican masterpieces, fountains & authentic pasta',
-    highlightTags: ['Ancient Forum', 'Vatican Museums', 'Trastevere Dining'],
-    gradient: 'from-amber-600 to-orange-700',
-    bgBadge: 'bg-orange-100 text-orange-800 border-orange-200',
-  },
-  {
-    key: 'barcelona',
-    city: 'Barcelona',
-    state: 'Catalonia, Spain',
-    days: 3,
-    badge: 'Gaudí & Coastal',
-    budget: 'Mid',
-    tagline: 'Sagrada Família spires, Park Güell mosaics, Mediterranean tapas & beach',
-    highlightTags: ['Sagrada Família', 'Gothic Quarter', 'Beachfront Promenade'],
-    gradient: 'from-blue-600 to-cyan-700',
-    bgBadge: 'bg-blue-100 text-blue-800 border-blue-200',
-  },
-];
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" }
+  }
+};
 
 export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePageProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedDuration, setSelectedDuration] = useState<number>(2);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const handleHeroSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = searchQuery.trim();
-    if (trimmed) {
-      onStartSearch(trimmed);
-    } else {
-      onStartSearch('Jaipur', 'India');
-    }
-  };
-
-  const handleSelectFeatured = (item: (typeof FEATURED_CITIES)[0]) => {
-    const preset = PRESET_ITINERARIES[item.key];
-    if (preset) {
-      onSelectPresetItinerary(preset);
-    } else {
-      onStartSearch(item.city);
-    }
-  };
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 10000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50/70 text-slate-800 antialiased flex flex-col font-sans">
-      {/* Top Navbar */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-xs">
-              <Compass className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-base text-slate-900 tracking-tight">
-                  TravelX
-                </span>
-                <span className="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
-                  AI Travel Planner
-                </span>
-              </div>
-            </div>
+    <div className="min-h-screen bg-[#e1ecf7] text-slate-800 flex flex-col font-sans overflow-x-hidden">
+      {/* Top Navbar - Sticky & Glassmorphism */}
+      <motion.header 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="sticky top-0 w-full z-50 bg-[#e1ecf7]/85 backdrop-blur-xl border-b border-white/40 shadow-[0_4px_30px_rgba(0,0,0,0.03)]"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[80px] flex items-center justify-between">
+          {/* Left Navigation */}
+          <nav className="hidden md:flex items-center gap-10 text-[15px] font-medium text-slate-500 flex-1 justify-start">
+            <button className="hover:text-[#2d497c] transition-colors">Explore</button>
+            <button onClick={() => onStartSearch()} className="hover:text-[#2d497c] transition-colors font-light text-slate-400">Search</button>
+            <button className="hover:text-[#2d497c] transition-colors">About</button>
+          </nav>
+          
+          {/* Center Logo */}
+          <div className="text-3xl font-semibold text-[#2d497c] hover:text-blue-600 transition-colors duration-300 tracking-tight italic select-none flex items-center justify-center cursor-pointer shrink-0">
+            TravelX
           </div>
-
-          {/* Quick Action */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => onStartSearch()}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-2 cursor-pointer"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Plan New Trip</span>
+          
+          {/* Right Actions */}
+          <div className="flex items-center gap-8 text-[15px] font-medium text-slate-500 flex-1 justify-end">
+            <button className="hidden md:block hover:text-[#2d497c] transition-colors">Community</button>
+            <button className="px-7 py-2.5 bg-[#3a3b3c] hover:bg-[#1e293b] text-white text-sm rounded-full transition-colors duration-300 shadow-md flex items-center gap-2 font-semibold active:scale-95">
+              Login/ Signup
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-linear-to-b from-blue-900 via-slate-900 to-slate-950 text-white pt-16 pb-20 px-4 sm:px-6">
-        {/* Subtle background glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-blue-500/20 blur-[100px] pointer-events-none rounded-full" />
-
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-semibold mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-            <span>Strict Schema AI Itinerary Generator</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight sm:leading-tight mb-4 text-balance">
-            Where Do You Want to Explore Next?
-          </h1>
-
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
-            Generate realistic, day-by-day travel itineraries with geographically clustered stops, local dining spots, curated stays, and transportation routes.
-          </p>
-
-          {/* Hero Search Box */}
-          <form
-            onSubmit={handleHeroSubmit}
-            className="max-w-2xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 shadow-xl border border-white/20 flex flex-col sm:flex-row items-center gap-2.5 text-slate-800"
+      <section className="relative w-full h-[calc(100vh-80px)] min-h-[500px] overflow-hidden bg-slate-900">
+        {HERO_IMAGES.map((src, index) => (
+          <motion.img 
+            key={index}
+            initial={{ opacity: index === 0 ? 1 : 0, scale: 1 }}
+            animate={{ 
+              opacity: currentImageIndex === index ? 1 : 0,
+              scale: currentImageIndex === index ? 1.15 : 1
+            }}
+            transition={{ 
+              opacity: { duration: 5, ease: "easeInOut" },
+              scale: { duration: 15, ease: "linear" }
+            }}
+            src={src} 
+            alt={`Hero background ${index + 1}`} 
+            className="absolute inset-0 w-full h-full object-cover" 
+          />
+        ))}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent flex flex-col items-center justify-end pb-24 px-4 z-10">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="flex flex-col items-center"
           >
-            <div className="flex items-center gap-2.5 px-3 py-2 w-full sm:flex-1 bg-slate-50 rounded-xl border border-slate-200 focus-within:border-blue-500 focus-within:bg-white transition">
-              <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Enter city or destination (e.g. Jaipur, Lucknow, Noida)..."
-                className="w-full text-xs sm:text-sm bg-transparent border-none outline-none font-medium placeholder:text-slate-400"
-              />
-            </div>
-
-            <div className="flex items-center gap-2 w-full sm:w-auto">
-              {/* Duration select */}
-              <select
-                value={selectedDuration}
-                onChange={(e) => setSelectedDuration(Number(e.target.value))}
-                className="px-3 py-2 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl font-semibold text-slate-700 outline-none focus:border-blue-500 cursor-pointer"
-              >
-                <option value={1}>1 Day</option>
-                <option value={2}>2 Days</option>
-                <option value={3}>3 Days</option>
-                <option value={4}>4 Days</option>
-                <option value={5}>5 Days</option>
-              </select>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full sm:w-auto px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 shrink-0 cursor-pointer"
-              >
-                <Search className="w-4 h-4" />
-                <span>Search & Plan</span>
-              </button>
-            </div>
-          </form>
-
-          {/* Quick Suggestions */}
-          <div className="mt-4 flex items-center justify-center gap-2 flex-wrap text-xs text-slate-400">
-            <span className="font-medium text-slate-300">Quick explore:</span>
-            {['Jaipur', 'Lucknow', 'Noida', 'Kyoto', 'Rome', 'Barcelona'].map((city) => (
-              <button
-                key={city}
-                type="button"
-                onClick={() => {
-                  const key = city.toLowerCase();
-                  if (PRESET_ITINERARIES[key]) {
-                    onSelectPresetItinerary(PRESET_ITINERARIES[key]);
-                  } else {
-                    onStartSearch(city);
-                  }
-                }}
-                className="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/15 transition text-[11px] font-medium cursor-pointer"
-              >
-                {city}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Destinations */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">
-              <Flame className="w-4 h-4 text-amber-500" />
-              <span>Curated Ready-to-Explore Itineraries</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Popular Trip Destinations
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Hand-verified routes with non-zigzag geographic ordering, local food, and realistic schedules.
-            </p>
-          </div>
-
-          <button
-            onClick={() => onStartSearch()}
-            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition flex items-center gap-2 self-start sm:self-auto cursor-pointer"
-          >
-            <span>Custom Destination Search</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-        {/* City Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {FEATURED_CITIES.map((item) => (
-            <div
-              key={item.key}
-              className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-md hover:border-slate-300 transition flex flex-col justify-between group"
+            <motion.h1 
+              variants={itemVariants}
+              className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-10 tracking-tight drop-shadow-2xl text-center italic"
             >
-              <div>
-                {/* Banner Gradient Header */}
-                <div
-                  className={`h-24 bg-linear-to-r ${item.gradient} p-4 text-white flex items-start justify-between relative overflow-hidden`}
-                >
-                  <div className="relative z-10">
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-black/25 px-2 py-0.5 rounded-full border border-white/20">
-                      {item.badge}
-                    </span>
-                    <h3 className="text-xl font-extrabold mt-1 tracking-tight">{item.city}</h3>
-                    <p className="text-xs text-white/80">{item.state}</p>
-                  </div>
-
-                  <span className="text-xs font-bold bg-white/20 backdrop-blur-xs px-2.5 py-1 rounded-lg border border-white/25 shrink-0">
-                    {item.days} Days
-                  </span>
-                </div>
-
-                {/* Body Content */}
-                <div className="p-5">
-                  <p className="text-xs text-slate-600 leading-relaxed mb-4">{item.tagline}</p>
-
-                  <div className="space-y-1.5 mb-4">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                      Key Highlights
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {item.highlightTags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-0.5 bg-slate-100 text-slate-700 text-[11px] rounded-md font-medium"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Footer Actions */}
-              <div className="p-4 bg-slate-50/80 border-t border-slate-100 flex items-center justify-between gap-2">
-                <button
-                  type="button"
-                  onClick={() => onStartSearch(item.city)}
-                  className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-200/60 transition cursor-pointer"
-                >
-                  Customize Inputs
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => handleSelectFeatured(item)}
-                  className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-lg shadow-2xs transition flex items-center gap-1.5 cursor-pointer"
-                >
-                  <span>Explore Itinerary</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          ))}
+              Your trip, planned in seconds.
+            </motion.h1>
+            <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-5">
+              <button 
+                onClick={() => onStartSearch()} 
+                className="group px-8 py-4 bg-white hover:bg-slate-100 text-slate-900 font-bold rounded-full shadow-xl transition-colors duration-300 min-w-[220px] flex items-center justify-center gap-2 active:scale-95"
+              >
+                Explore Location
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <button className="px-8 py-4 bg-white/5 hover:bg-white/15 border border-white/40 text-white font-bold rounded-full shadow-lg transition-colors duration-300 backdrop-blur-md min-w-[220px] active:scale-95">
+                Community
+              </button>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Why TravelX Feature Grid */}
-      <section className="bg-white border-y border-slate-200 py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-              Engineered for Realistic Travel
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Every detail is shaped around how people actually explore cities on foot and transit.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-              <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center mb-3">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-slate-900 mb-1">Geographic Proximity</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Stops are sequenced logically by neighborhood so you never waste time crisscrossing the city.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-              <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-3">
-                <Utensils className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-slate-900 mb-1">Authentic Local Dining</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Two culinary recommendations per day placed right near that day's walking route.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-3">
-                <Train className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-slate-900 mb-1">Train & Flight Routes</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Explore estimated connections, class types, and fares to reach your vacation destination.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80">
-              <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center mb-3">
-                <Layers className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold text-slate-900 mb-1">Strict JSON Schema</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Export to JSON, copy coordinates, or print a formatted travel plan ready for your journey.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Bottom CTA Banner */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="bg-linear-to-r from-blue-600 to-indigo-700 rounded-3xl p-8 sm:p-10 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
-          <div>
-            <h3 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-              Ready to create your next itinerary?
-            </h3>
-            <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-xl">
-              Fill in your travel preferences, budget, and desired pace to generate a tailored itinerary in seconds.
-            </p>
-          </div>
-
-          <button
-            onClick={() => onStartSearch()}
-            className="px-6 py-3 bg-white text-blue-900 hover:bg-blue-50 text-xs sm:text-sm font-extrabold rounded-xl shadow-md transition flex items-center gap-2 shrink-0 cursor-pointer"
+      {/* Workflow Section */}
+      <section className="py-24 md:py-32 relative">
+        {/* Decorative background blur */}
+        <div className="absolute top-20 left-0 w-96 h-96 bg-blue-300/20 rounded-full blur-[120px] pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl md:text-5xl font-extrabold text-center text-slate-900 mb-20 max-w-3xl mx-auto italic drop-shadow-sm"
           >
-            <Sparkles className="w-4 h-4 text-blue-600" />
-            <span>Open Trip Planner</span>
-          </button>
+            Want to Plan your Travel without Switching Tabs ??
+          </motion.h2>
+          
+          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+            {/* Visual Area */}
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative w-full lg:w-1/2 h-[450px] mx-auto group perspective-1000"
+            >
+              {/* Back card (White) */}
+              <motion.div 
+                whileHover={{ y: -4 }}
+                className="absolute top-0 left-0 w-[85%] h-[320px] bg-white/90 backdrop-blur-xl rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-white flex flex-col p-8 z-10 transition-all duration-500 overflow-hidden"
+              >
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center shadow-inner"><MapPin className="w-6 h-6 text-blue-500"/></div>
+                  <div className="h-5 w-48 bg-slate-100 rounded-full animate-pulse"></div>
+                </div>
+                <div className="flex-1 w-full bg-slate-50/50 rounded-2xl border border-slate-100 flex flex-col gap-5 p-6">
+                   <div className="h-4 w-full bg-slate-200 rounded-full"></div>
+                   <div className="h-4 w-3/4 bg-slate-200 rounded-full"></div>
+                   <div className="h-4 w-5/6 bg-slate-200 rounded-full"></div>
+                   <div className="mt-auto flex justify-between items-center pt-6 border-t border-slate-100">
+                      <div className="h-10 w-32 bg-blue-100/50 rounded-xl"></div>
+                      <div className="h-10 w-10 bg-slate-200 rounded-full"></div>
+                   </div>
+                </div>
+              </motion.div>
+              
+              {/* Front card (Dark Blue/Purple) */}
+              <motion.div 
+                whileHover={{ y: 4 }}
+                className="absolute bottom-0 right-0 w-[85%] h-[340px] bg-gradient-to-br from-[#7483a9] to-[#5a6789] rounded-3xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.4)] flex flex-col p-8 z-20 transition-all duration-500 border border-white/20 overflow-hidden backdrop-blur-xl"
+              >
+                 <div className="flex justify-between items-center mb-8">
+                   <div className="h-7 w-40 bg-white/20 rounded-full shadow-inner"></div>
+                   <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md">
+                     <Layers className="w-6 h-6 text-white/80" />
+                   </div>
+                 </div>
+                 <div className="flex-1 w-full bg-white/5 rounded-2xl border border-white/10 flex gap-6 p-6 shadow-inner">
+                    <div className="w-1/3 h-full bg-white/10 rounded-xl"></div>
+                    <div className="flex-1 flex flex-col gap-5">
+                       <div className="h-4 w-full bg-white/20 rounded-full"></div>
+                       <div className="h-4 w-4/5 bg-white/20 rounded-full"></div>
+                       <div className="h-4 w-2/3 bg-white/20 rounded-full mt-auto"></div>
+                    </div>
+                 </div>
+                 <div className="mt-8 flex justify-center gap-3">
+                    <div className="h-2 w-10 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]"></div>
+                    <div className="h-2 w-2 bg-white/30 rounded-full"></div>
+                    <div className="h-2 w-2 bg-white/30 rounded-full"></div>
+                 </div>
+              </motion.div>
+            </motion.div>
+            
+            {/* Text Content */}
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="w-full lg:w-1/2 flex flex-col gap-14 lg:pl-10"
+            >
+              <motion.div variants={itemVariants} className="relative">
+                <div className="absolute -left-6 top-2 w-2 h-full bg-blue-500 rounded-full opacity-20" />
+                <h3 className="text-3xl font-extrabold text-slate-900 mb-4 italic tracking-tight">Enter Destination, Days, Budget & Preference</h3>
+                <p className="text-slate-600 leading-relaxed max-w-md text-lg">Tell us where you want to go and what you love. Our AI handles the heavy lifting, curating the perfect trip parameters.</p>
+              </motion.div>
+              <motion.div variants={itemVariants} className="lg:pl-12 relative">
+                <div className="absolute left-6 lg:left-6 top-2 w-2 h-full bg-indigo-500 rounded-full opacity-20 hidden lg:block" />
+                <h3 className="text-3xl font-extrabold text-[#2d497c] mb-4 italic tracking-tight">Get Your Itinerary Plan & Customize it later</h3>
+                <p className="text-slate-600 leading-relaxed max-w-md text-lg">Instantly receive a complete travel plan. Swap out restaurants, change hotels, or adjust timelines directly in the visual studio.</p>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features & Filler Section */}
+      <section className="py-24 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute right-0 top-1/2 w-[500px] h-[500px] bg-white/40 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/4" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-28"
+          >
+            {[
+              { icon: MapPin, title: "Geographic Routing", desc: "Stops are sequenced logically by neighborhood so you never waste time crisscrossing the city.", color: "text-blue-600", bg: "bg-blue-50" },
+              { icon: Utensils, title: "Local Experiences", desc: "Two culinary recommendations per day placed right near that day's walking route.", color: "text-amber-600", bg: "bg-amber-50" },
+              { icon: Train, title: "Seamless Transit", desc: "Explore estimated connections, class types, and fares to reach your vacation destination.", color: "text-emerald-600", bg: "bg-emerald-50" }
+            ].map((feature, idx) => (
+              <motion.div 
+                key={idx}
+                variants={itemVariants}
+                whileHover={{ y: -4, boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.05)" }}
+                className="bg-white/80 backdrop-blur-lg rounded-[2rem] p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white transition-all text-center flex flex-col items-center group relative overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className={`w-16 h-16 ${feature.bg} rounded-2xl flex items-center justify-center ${feature.color} mb-8 shadow-sm group-hover:scale-110 transition-transform duration-300 relative z-10`}>
+                  <feature.icon className="w-8 h-8" />
+                </div>
+                <h4 className="text-xl font-extrabold text-slate-800 mb-4 italic relative z-10">{feature.title}</h4>
+                <p className="text-slate-500 text-base leading-relaxed relative z-10 font-medium">
+                  {feature.desc}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+          
+          {/* Filler/Suggested Places */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="pb-32"
+          >
+             <h3 className="text-2xl font-extrabold text-[#2d497c] mb-14 italic flex items-center justify-center gap-3 text-center">
+               Popular Destinations to Explore
+             </h3>
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
+               {[
+                 { name: 'Jaipur', desc: 'The Pink City', icon: '🏰', color: 'from-pink-500 to-rose-500' },
+                 { name: 'Lucknow', desc: 'City of Nawabs', icon: '🕌', color: 'from-amber-500 to-orange-500' },
+                 { name: 'Noida', desc: 'Tech & Commerce', icon: '🏢', color: 'from-blue-500 to-cyan-500' },
+                 { name: 'Kyoto', desc: 'Ancient Traditions', icon: '⛩️', color: 'from-red-500 to-rose-600' },
+                 { name: 'Rome', desc: 'Eternal City', icon: '🏛️', color: 'from-stone-500 to-amber-700' },
+                 { name: 'Barcelona', desc: 'Art & Architecture', icon: '🎨', color: 'from-yellow-400 to-orange-500' },
+               ].map((dest, i) => (
+                  <motion.div 
+                    key={dest.name} 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    onClick={() => {
+                      const key = dest.name.toLowerCase();
+                      if (PRESET_ITINERARIES[key]) {
+                        onSelectPresetItinerary(PRESET_ITINERARIES[key]);
+                      } else {
+                        onStartSearch(dest.name);
+                      }
+                    }} 
+                    className="relative bg-white rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer group flex flex-col items-start text-left overflow-hidden h-52"
+                  >
+                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${dest.color} rounded-full blur-3xl opacity-10 group-hover:opacity-20 transition-opacity translate-x-1/2 -translate-y-1/2`} />
+                    <span className="text-4xl mb-auto relative z-10">{dest.icon}</span>
+                    <div className="w-full relative z-10">
+                       <h4 className="text-xl font-extrabold text-slate-800 mb-1 group-hover:text-blue-600 transition-colors italic">{dest.name}</h4>
+                       <div className="flex items-center justify-between">
+                         <p className="text-sm text-slate-500 font-medium">{dest.desc}</p>
+                         <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-blue-50 flex items-center justify-center transition-colors">
+                           <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
+                         </div>
+                       </div>
+                    </div>
+                  </motion.div>
+               ))}
+             </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white py-6 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-800">TravelX</span>
-            <span>—</span>
-            <span>AI Travel Itinerary Generator strictly adhering to schema constraints</span>
+      <footer className="bg-slate-900 text-slate-300 py-20 mt-auto border-t-4 border-[#2d497c]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+          <div className="text-4xl font-black text-white hover:text-blue-400 transition-colors duration-300 tracking-tight italic mb-6 inline-flex items-center gap-2 cursor-pointer">
+            TravelX
           </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => onStartSearch()}
-              className="text-blue-600 font-bold hover:underline cursor-pointer"
-            >
-              Plan Trip Now
-            </button>
+          <p className="text-base text-slate-400 mb-10 max-w-md mx-auto leading-relaxed">
+            AI Travel Itinerary Generator strictly adhering to schema constraints. Build your dream trip in seconds.
+          </p>
+          <div className="text-sm font-medium text-slate-500">
+            © {new Date().getFullYear()} TravelX. All rights reserved.
           </div>
         </div>
       </footer>

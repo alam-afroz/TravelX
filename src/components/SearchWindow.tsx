@@ -49,21 +49,17 @@ const POPULAR_DESTINATIONS = [
 ];
 
 export function SearchWindow({
-  initialCity = 'Jaipur',
-  initialCountry = 'India',
+  initialCity = '',
+  initialCountry = '',
   onBackToHome,
   onGenerated,
 }: SearchWindowProps) {
   const [city, setCity] = useState(initialCity);
   const [country, setCountry] = useState(initialCountry);
-  const [daysCount, setDaysCount] = useState<number>(2);
-  const [budgetLevel, setBudgetLevel] = useState<'low' | 'mid' | 'high'>('mid');
-  const [pacePreference, setPacePreference] = useState<'relaxed' | 'moderate' | 'packed'>('moderate');
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([
-    'History & Heritage',
-    'Art & Museums',
-    'Food & Street Markets',
-  ]);
+  const [daysCount, setDaysCount] = useState<number | null>(null);
+  const [budgetLevel, setBudgetLevel] = useState<'low' | 'mid' | 'high' | null>(null);
+  const [pacePreference, setPacePreference] = useState<'relaxed' | 'moderate' | 'packed' | null>(null);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   const [customNotes, setCustomNotes] = useState('');
 
   // Generation status
@@ -101,6 +97,26 @@ export function SearchWindow({
 
     if (!city.trim()) {
       setErrorMsg('Please enter a destination city');
+      return;
+    }
+    if (!country.trim()) {
+      setErrorMsg('Please enter a country');
+      return;
+    }
+    if (!daysCount) {
+      setErrorMsg('Please select a trip duration');
+      return;
+    }
+    if (!budgetLevel) {
+      setErrorMsg('Please select a budget tier');
+      return;
+    }
+    if (!pacePreference) {
+      setErrorMsg('Please select a pace preference');
+      return;
+    }
+    if (selectedInterests.length === 0) {
+      setErrorMsg('Please select at least one interest');
       return;
     }
 
@@ -176,31 +192,24 @@ export function SearchWindow({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/70 text-slate-800 antialiased flex flex-col font-sans">
+    <div className="min-h-screen bg-[#e1ecf7] text-slate-800 antialiased flex flex-col font-sans">
       {/* Top Navbar */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+      <header className="sticky top-0 z-40 bg-[#e1ecf7]/85 backdrop-blur-xl border-b border-white/40 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               onClick={onBackToHome}
-              className="p-2 -ml-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+              className="p-2 -ml-2 text-slate-500 hover:text-slate-900 rounded-full hover:bg-slate-100 transition flex items-center cursor-pointer"
+              title="Return to Home"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to Home</span>
+              <ArrowLeft className="w-5 h-5" />
             </button>
             <span className="text-slate-300">|</span>
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-base text-slate-900 tracking-tight">
+              <span className="font-extrabold text-lg text-[#2d497c] tracking-tight italic">
                 TravelX
               </span>
-              <span className="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
-                Trip Search Window
-              </span>
             </div>
-          </div>
-
-          <div className="text-xs text-slate-500 font-medium hidden sm:block">
-            Fill your parameters → Generate customized itinerary
           </div>
         </div>
       </header>
@@ -209,7 +218,7 @@ export function SearchWindow({
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-10 w-full flex-1">
         {/* Title & Introduction */}
         <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#2d497c] tracking-tight italic">
             Customize Your Travel Plan
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
@@ -217,33 +226,10 @@ export function SearchWindow({
           </p>
         </div>
 
-        {/* Quick Destination Suggestions */}
-        <div className="mb-6 bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
-            Popular Destinations
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {POPULAR_DESTINATIONS.map((item) => (
-              <button
-                key={item.city}
-                type="button"
-                onClick={() => handleSelectPopular(item)}
-                className={`px-3 py-1 rounded-lg text-xs font-medium border transition cursor-pointer ${
-                  city.toLowerCase() === item.city.toLowerCase()
-                    ? 'bg-blue-600 text-white border-blue-600 font-bold shadow-2xs'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                }`}
-              >
-                {item.city}, {item.country}
-              </button>
-            ))}
-          </div>
-        </div>
-
         {/* Search & Customization Form */}
         <form
           onSubmit={handleGenerate}
-          className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 shadow-xs space-y-6"
+          className="bg-white/90 backdrop-blur-lg rounded-3xl border border-white p-6 sm:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-7"
         >
           {/* Destination Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -261,7 +247,7 @@ export function SearchWindow({
                   setErrorMsg(null);
                 }}
                 placeholder="e.g. Jaipur, Lucknow, Noida, Rome"
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-500 transition"
+                className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200 shadow-inner rounded-2xl text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all"
               />
             </div>
 
@@ -274,30 +260,10 @@ export function SearchWindow({
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="e.g. India, Japan, Italy"
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-500 transition"
+                className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200 shadow-inner rounded-2xl text-xs sm:text-sm text-slate-900 font-medium focus:bg-white focus:outline-none focus:border-blue-400 focus:ring-4 focus:ring-blue-500/10 transition-all"
               />
             </div>
           </div>
-
-          {/* Instant Preset Alert Banner if applicable */}
-          {matchedPreset && (
-            <div className="p-3.5 bg-blue-50/90 border border-blue-200 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-blue-900">
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-blue-600 shrink-0" />
-                <span>
-                  <strong>Instant Preset Ready:</strong> Verified 2-day itinerary available for{' '}
-                  {matchedPreset.city}!
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={handleLoadInstantPreset}
-                className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs shadow-2xs shrink-0 transition cursor-pointer"
-              >
-                Load Instant Itinerary
-              </button>
-            </div>
-          )}
 
           {/* Trip Duration Selector */}
           <div>
@@ -481,7 +447,7 @@ export function SearchWindow({
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition flex items-center gap-2 cursor-pointer"
+              className="px-8 py-3.5 bg-[#2d497c] hover:bg-blue-600 disabled:opacity-50 text-white text-xs sm:text-sm font-bold rounded-full shadow-lg transition-all flex items-center gap-2 cursor-pointer active:scale-95"
             >
               {loading ? (
                 <>
@@ -490,8 +456,7 @@ export function SearchWindow({
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-4 h-4" />
-                  <span>Generate Itinerary</span>
+                  <span>Go</span>
                 </>
               )}
             </button>
