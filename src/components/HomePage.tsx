@@ -11,11 +11,13 @@ import {
   Map,
   Wallet,
   Menu,
-  X
+  X,
+  LogOut
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { PRESET_ITINERARIES } from '../data/presets.ts';
 import { Itinerary } from '../types.ts';
+import { UserMenu } from './UserMenu.tsx';
 import slide1 from '../assets/hero_section/ladakh.png';
 import slide2 from '../assets/hero_section/ghat.jpg';
 import searchImg from '../assets/search.png';
@@ -33,6 +35,10 @@ const HERO_IMAGES = [slide1, slide2];
 interface HomePageProps {
   onStartSearch: (initialCity?: string, initialCountry?: string) => void;
   onSelectPresetItinerary: (itinerary: Itinerary) => void;
+  currentUser?: any;
+  onNavigateToLogin?: () => void;
+  onNavigateToSignUp?: () => void;
+  onLogout?: () => void;
 }
 
 const containerVariants = {
@@ -52,7 +58,7 @@ const itemVariants = {
   }
 };
 
-export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePageProps) {
+export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, onNavigateToLogin, onNavigateToSignUp, onLogout }: HomePageProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -103,9 +109,22 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
           {/* Desktop Right Actions */}
           <div className="hidden md:flex items-center gap-8 text-[15px] font-medium text-slate-500 flex-1 justify-end">
             <button className="hover:text-[#2d497c] transition-colors cursor-pointer">Community</button>
-            <button className="px-7 py-2.5 bg-[#3a3b3c] hover:bg-[#1e293b] text-white text-sm rounded-full transition-colors duration-300 shadow-md flex items-center gap-2 font-semibold active:scale-95 cursor-pointer">
-              Login/ Signup
-            </button>
+            {currentUser ? (
+              <UserMenu 
+                currentUser={currentUser} 
+                onLogout={() => onLogout?.()} 
+                onSwitchAccount={() => {
+                  onNavigateToLogin?.();
+                }}
+              />
+            ) : (
+              <button 
+                onClick={onNavigateToLogin}
+                className="px-7 py-2.5 bg-[#3a3b3c] hover:bg-[#1e293b] text-white text-sm rounded-full transition-colors duration-300 shadow-md flex items-center gap-2 font-semibold active:scale-95 cursor-pointer"
+              >
+                Login/ Signup
+              </button>
+            )}
           </div>
 
           {/* Mobile Right Spacer (to keep logo centered) */}
@@ -150,14 +169,55 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
             >
               Community
             </button>
-            <button 
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-              }}
-              className="mt-2 px-7 py-2.5 bg-[#3a3b3c] hover:bg-[#1e293b] text-white text-sm rounded-full transition-colors duration-300 shadow-md font-semibold text-center w-full active:scale-95 cursor-pointer"
-            >
-              Login/ Signup
-            </button>
+            {currentUser ? (
+              <>
+                <div className="w-full h-px bg-slate-300 my-1" />
+                
+                <div className="text-left py-2 text-slate-800 font-semibold truncate">
+                  {currentUser.displayName || currentUser.email || 'Account'}
+                </div>
+                
+                <button 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="text-left py-2 hover:text-[#2d497c] transition-colors cursor-pointer"
+                >
+                  Recent
+                </button>
+
+                <button 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onNavigateToLogin?.();
+                  }}
+                  className="text-left py-2 hover:text-[#2d497c] transition-colors cursor-pointer"
+                >
+                  Switch Account
+                </button>
+
+                <button 
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onLogout?.();
+                  }}
+                  className="flex items-center gap-3 py-2 text-red-600 hover:text-red-700 transition-colors cursor-pointer text-left font-medium"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Log Out
+                </button>
+              </>
+            ) : (
+              <button 
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onNavigateToLogin?.();
+                }}
+                className="mt-2 px-7 py-2.5 bg-[#3a3b3c] hover:bg-[#1e293b] text-white text-sm rounded-full transition-colors duration-300 shadow-md font-semibold text-center w-full active:scale-95 cursor-pointer"
+              >
+                Login/ Signup
+              </button>
+            )}
           </div>
         )}
       </motion.header>

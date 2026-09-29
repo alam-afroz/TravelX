@@ -13,6 +13,11 @@ import { TransportationSection } from './components/TransportationSection.tsx';
 import { HomePage } from './components/HomePage.tsx';
 import { SearchWindow } from './components/SearchWindow.tsx';
 import { AboutPage } from './components/AboutPage.tsx';
+import { LoginPage } from './components/LoginPage.tsx';
+import { SignUpPage } from './components/SignUpPage.tsx';
+import { UserMenu } from './components/UserMenu.tsx';
+import { auth } from './lib/firebase.ts';
+import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
 import {
   Compass,
   Sparkles,
@@ -31,9 +36,12 @@ import {
   Train,
   ArrowLeft,
   Search,
+  LogOut,
+  LogIn,
+  UserPlus,
 } from 'lucide-react';
 
-type AppView = 'home' | 'search' | 'results' | 'about';
+type AppView = 'home' | 'search' | 'results' | 'about' | 'login' | 'signup';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<AppView>(() => {
@@ -42,6 +50,8 @@ export default function App() {
       if (hash === '#search') return 'search';
       if (hash === '#results' || hash === '#itinerary') return 'results';
       if (hash === '#about') return 'about';
+      if (hash === '#login') return 'login';
+      if (hash === '#signup') return 'signup';
     }
     return 'home';
   });
@@ -53,6 +63,14 @@ export default function App() {
   const [activeStopName, setActiveStopName] = useState<string | null>(null);
   const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
   const [copiedNotification, setCopiedNotification] = useState(false);
+  const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Sync hash routing so browser Back / Forward buttons work smoothly
   useEffect(() => {
@@ -66,6 +84,10 @@ export default function App() {
         setCurrentView('results');
       } else if (hash === '#about') {
         setCurrentView('about');
+      } else if (hash === '#login') {
+        setCurrentView('login');
+      } else if (hash === '#signup') {
+        setCurrentView('signup');
       }
     };
 
@@ -152,6 +174,10 @@ export default function App() {
       <HomePage
         onStartSearch={handleStartSearchFromHome}
         onSelectPresetItinerary={handleSelectPresetFromHome}
+        currentUser={currentUser}
+        onNavigateToLogin={() => navigateTo('login')}
+        onNavigateToSignUp={() => navigateTo('signup')}
+        onLogout={() => signOut(auth)}
       />
     );
   }
@@ -175,6 +201,16 @@ export default function App() {
     );
   }
 
+  // Screen 4: Login
+  if (currentView === 'login') {
+    return <LoginPage onBack={() => navigateTo('home')} onNavigateToSignUp={() => navigateTo('signup')} />;
+  }
+
+  // Screen 5: SignUp
+  if (currentView === 'signup') {
+    return <SignUpPage onBack={() => navigateTo('home')} onNavigateToLogin={() => navigateTo('login')} />;
+  }
+
   // Screen 3: Results View (Itinerary Studio)
   const currentDay =
     selectedDayNumber === 'all'
@@ -185,7 +221,7 @@ export default function App() {
     <div className="min-h-screen bg-[#e1ecf7] text-slate-800 antialiased flex flex-col font-sans">
       {/* Top Navigation */}
       <header className="sticky top-0 z-40 bg-[#e1ecf7]/85 backdrop-blur-xl border-b border-white/40 shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-4">
           {/* Back to Home */}
           <div className="flex-1 flex items-center">
             <button
@@ -209,8 +245,35 @@ export default function App() {
             </button>
           </div>
 
-          {/* Plan Action */}
-          <div className="flex-1 flex items-center justify-end gap-2">
+          {/* Plan Action and Auth */}
+          <div className="flex-1 flex items-center justify-end gap-3">
+            {currentUser ? (
+              <UserMenu 
+                currentUser={currentUser} 
+                onLogout={() => signOut(auth)} 
+                onSwitchAccount={() => {
+                  navigateTo('login');
+                }}
+              />
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => navigateTo('login')}
+                  className="hidden sm:flex px-3 py-1.5 text-slate-600 hover:text-slate-900 text-xs font-bold rounded-full hover:bg-slate-100 transition-colors items-center gap-1.5 cursor-pointer"
+                >
+                  <LogIn className="w-3.5 h-3.5" />
+                  <span>Log In</span>
+                </button>
+                <button
+                  onClick={() => navigateTo('signup')}
+                  className="hidden sm:flex px-3 py-1.5 bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs font-bold rounded-full transition-colors items-center gap-1.5 cursor-pointer"
+                >
+                  <UserPlus className="w-3.5 h-3.5" />
+                  <span>Sign Up</span>
+                </button>
+              </div>
+            )}
+            
             <button
               onClick={() => {
                 setSearchInit({ city: itinerary.city, country: itinerary.country });
@@ -219,7 +282,7 @@ export default function App() {
               className="px-4 py-2 bg-[#2d497c] hover:bg-[#1e293b] text-white text-xs font-bold rounded-full shadow-md transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
             >
               <Search className="w-3.5 h-3.5" />
-              <span>New Search</span>
+              <span className="hidden sm:inline">New Search</span>
             </button>
           </div>
         </div>
