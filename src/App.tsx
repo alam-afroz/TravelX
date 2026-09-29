@@ -186,38 +186,31 @@ export default function App() {
       {/* Top Navigation */}
       <header className="sticky top-0 z-40 bg-[#e1ecf7]/85 backdrop-blur-xl border-b border-white/40 shadow-[0_4px_30px_rgba(0,0,0,0.03)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          {/* Back to Home & Logo */}
-          <div className="flex items-center gap-3">
+          {/* Back to Home */}
+          <div className="flex-1 flex items-center">
             <button
               onClick={() => navigateTo('home')}
-              className="p-2 -ml-2 text-slate-500 hover:text-slate-900 rounded-sm hover:bg-slate-100 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer"
+              className="p-2 -ml-2 text-slate-500 hover:text-slate-900 rounded-full hover:bg-slate-100 transition flex items-center justify-center cursor-pointer"
               title="Return to Home Page"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Home</span>
+              <ArrowLeft className="w-5 h-5" />
             </button>
+          </div>
 
-            <span className="text-slate-300">|</span>
-
+          {/* Center Logo */}
+          <div className="flex-shrink-0 flex items-center justify-center">
             <button
               onClick={() => navigateTo('home')}
-              className="flex items-center gap-2.5 text-left cursor-pointer group"
+              className="cursor-pointer group flex flex-col items-center"
             >
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="font-medium text-xl text-[#2d497c] tracking-wide">
-                    TravelX
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-500 font-medium group-hover:text-slate-700 transition-colors">
-                  {itinerary.city}, {itinerary.country}
-                </p>
-              </div>
+              <span className="font-medium text-xl text-[#2d497c] tracking-wide">
+                TravelX
+              </span>
             </button>
           </div>
 
           {/* Plan Action */}
-          <div className="flex items-center gap-2">
+          <div className="flex-1 flex items-center justify-end gap-2">
             <button
               onClick={() => {
                 setSearchInit({ city: itinerary.city, country: itinerary.country });

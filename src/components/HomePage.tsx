@@ -9,7 +9,9 @@ import {
   Zap,
   CalendarDays,
   Map,
-  Wallet
+  Wallet,
+  Menu,
+  X
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { PRESET_ITINERARIES } from '../data/presets.ts';
@@ -52,6 +54,7 @@ const itemVariants = {
 
 export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePageProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -70,7 +73,17 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
         className="sticky top-0 w-full z-50 bg-[#e1ecf7]/85 backdrop-blur-xl border-b border-white/40 shadow-[0_4px_30px_rgba(0,0,0,0.03)]"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[80px] flex items-center justify-between">
-          {/* Left Navigation */}
+          {/* Mobile Hamburger */}
+          <div className="flex md:hidden flex-1 justify-start">
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+              className="p-2 -ml-2 text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
+          {/* Desktop Left Navigation */}
           <nav className="hidden md:flex items-center gap-10 text-[15px] font-medium text-slate-500 flex-1 justify-start">
             <button 
               onClick={() => document.getElementById('popular-destinations')?.scrollIntoView({ behavior: 'smooth' })}
@@ -87,14 +100,66 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary }: HomePagePro
             TravelX
           </div>
           
-          {/* Right Actions */}
-          <div className="flex items-center gap-8 text-[15px] font-medium text-slate-500 flex-1 justify-end">
-            <button className="hidden md:block hover:text-[#2d497c] transition-colors">Community</button>
-            <button className="px-7 py-2.5 bg-[#3a3b3c] hover:bg-[#1e293b] text-white text-sm rounded-full transition-colors duration-300 shadow-md flex items-center gap-2 font-semibold active:scale-95">
+          {/* Desktop Right Actions */}
+          <div className="hidden md:flex items-center gap-8 text-[15px] font-medium text-slate-500 flex-1 justify-end">
+            <button className="hover:text-[#2d497c] transition-colors cursor-pointer">Community</button>
+            <button className="px-7 py-2.5 bg-[#3a3b3c] hover:bg-[#1e293b] text-white text-sm rounded-full transition-colors duration-300 shadow-md flex items-center gap-2 font-semibold active:scale-95 cursor-pointer">
               Login/ Signup
             </button>
           </div>
+
+          {/* Mobile Right Spacer (to keep logo centered) */}
+          <div className="flex md:hidden flex-1 justify-end"></div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden absolute top-[80px] left-0 w-full bg-[#e1ecf7]/95 backdrop-blur-xl border-b border-white/40 shadow-lg z-40 py-4 px-6 flex flex-col gap-4 text-[15px] font-medium text-slate-600">
+            <button 
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                document.getElementById('popular-destinations')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="text-left py-2 hover:text-[#2d497c] transition-colors cursor-pointer"
+            >
+              Explore
+            </button>
+            <button 
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                onStartSearch();
+              }} 
+              className="text-left py-2 hover:text-[#2d497c] transition-colors cursor-pointer"
+            >
+              Search
+            </button>
+            <button 
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                window.location.hash = '#about';
+              }} 
+              className="text-left py-2 hover:text-[#2d497c] transition-colors cursor-pointer"
+            >
+              About
+            </button>
+            <button 
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+              }}
+              className="text-left py-2 hover:text-[#2d497c] transition-colors cursor-pointer"
+            >
+              Community
+            </button>
+            <button 
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+              }}
+              className="mt-2 px-7 py-2.5 bg-[#3a3b3c] hover:bg-[#1e293b] text-white text-sm rounded-full transition-colors duration-300 shadow-md font-semibold text-center w-full active:scale-95 cursor-pointer"
+            >
+              Login/ Signup
+            </button>
+          </div>
+        )}
       </motion.header>
 
       {/* Hero Section */}
