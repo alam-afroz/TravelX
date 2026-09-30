@@ -16,8 +16,11 @@ import { AboutPage } from './components/AboutPage.tsx';
 import { LoginPage } from './components/LoginPage.tsx';
 import { SignUpPage } from './components/SignUpPage.tsx';
 import { UserMenu } from './components/UserMenu.tsx';
-import { auth } from './lib/firebase.ts';
+import { RecentTripsPage } from './components/RecentTripsPage.tsx';
+import { Footer } from './components/Footer.tsx';
+import { db, auth } from './lib/firebase.ts';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import {
   Compass,
   Sparkles,
@@ -41,7 +44,7 @@ import {
   UserPlus,
 } from 'lucide-react';
 
-type AppView = 'home' | 'search' | 'results' | 'about' | 'login' | 'signup';
+type AppView = 'home' | 'search' | 'results' | 'about' | 'login' | 'signup' | 'recent';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<AppView>(() => {
@@ -52,6 +55,7 @@ export default function App() {
       if (hash === '#about') return 'about';
       if (hash === '#login') return 'login';
       if (hash === '#signup') return 'signup';
+      if (hash === '#recent') return 'recent';
     }
     return 'home';
   });
@@ -88,6 +92,8 @@ export default function App() {
         setCurrentView('login');
       } else if (hash === '#signup') {
         setCurrentView('signup');
+      } else if (hash === '#recent') {
+        setCurrentView('recent');
       }
     };
 
@@ -116,8 +122,33 @@ export default function App() {
     navigateTo('results');
   };
 
+  const saveItineraryToFirestore = async (newItinerary: Itinerary) => {
+    if (!currentUser) return;
+    try {
+      await addDoc(collection(db, 'trips'), {
+        userId: currentUser.uid,
+        city: newItinerary.city,
+        days: newItinerary.days.length,
+        budget: newItinerary.budget || 'N/A',
+        interests: newItinerary.interests || [],
+        itinerary: newItinerary,
+        createdAt: serverTimestamp()
+      });
+    } catch (error) {
+      console.error("Error saving trip to Firestore:", error);
+    }
+  };
+
   const handleGeneratedFromSearch = (newItinerary: Itinerary) => {
     setItinerary(newItinerary);
+    setSelectedDayNumber(1);
+    setActiveStopName(null);
+    saveItineraryToFirestore(newItinerary);
+    navigateTo('results');
+  };
+
+  const handleSelectRecentTrip = (tripItinerary: Itinerary) => {
+    setItinerary(tripItinerary);
     setSelectedDayNumber(1);
     setActiveStopName(null);
     navigateTo('results');
@@ -145,11 +176,11 @@ export default function App() {
     });
   };
 
-  // Handle receiving new generated itinerary from drawer
   const handleGenerated = (newItinerary: Itinerary) => {
     setItinerary(newItinerary);
     setSelectedDayNumber(1);
     setActiveStopName(null);
+    saveItineraryToFirestore(newItinerary);
   };
 
   // Quick copy raw JSON
@@ -178,6 +209,7 @@ export default function App() {
         onNavigateToLogin={() => navigateTo('login')}
         onNavigateToSignUp={() => navigateTo('signup')}
         onLogout={() => signOut(auth)}
+        onNavigateToRecent={() => navigateTo('recent')}
       />
     );
   }
@@ -211,7 +243,18 @@ export default function App() {
     return <SignUpPage onBack={() => navigateTo('home')} onNavigateToLogin={() => navigateTo('login')} />;
   }
 
-  // Screen 3: Results View (Itinerary Studio)
+  // Screen 6: Recent Trips
+  if (currentView === 'recent') {
+    return (
+      <RecentTripsPage 
+        currentUser={currentUser} 
+        onBackToHome={() => navigateTo('home')} 
+        onSelectRecentTrip={handleSelectRecentTrip} 
+      />
+    );
+  }
+
+  // Screen 3: Results View (Travel Plan Studio)
   const currentDay =
     selectedDayNumber === 'all'
       ? null
@@ -254,6 +297,7 @@ export default function App() {
                 onSwitchAccount={() => {
                   navigateTo('login');
                 }}
+                onNavigateToRecent={() => navigateTo('recent')}
               />
             ) : (
               <div className="flex items-center gap-2">
@@ -532,40 +576,21 @@ export default function App() {
         {activeTab === 'prompt' && <SystemPromptViewer />}
       </main>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-300 py-16 mt-16 border-t-4 border-[#2d497c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-400">
-          <div className="flex flex-col items-center md:items-start gap-2">
-            <div className="font-medium text-white hover:text-blue-400 transition-colors duration-300 tracking-wide flex items-center gap-2 text-3xl cursor-pointer" onClick={() => navigateTo('home')}>
-              TravelX
-            </div>
-            <span>AI Travel Itinerary Generator strictly adhering to schema constraints.</span>
-          </div>
-
-          <div className="flex flex-wrap justify-center items-center gap-4 font-semibold text-xs">
-            <button
-              onClick={() => setActiveTab('prompt')}
-              className="hover:text-white transition-colors"
-            >
-              System Prompt Specs
-            </button>
-            <span className="text-slate-700">•</span>
-            <button
-              onClick={() => setActiveTab('json')}
-              className="hover:text-white transition-colors"
-            >
-              JSON Schema Export
-            </button>
-            <span className="text-slate-700">•</span>
-            <button
-              onClick={() => setIsGeneratorOpen(true)}
-              className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors active:scale-95"
-            >
-              Generate Itinerary
-            </button>
-          </div>
-        </div>
-      </footer>
+      <Footer 
+        currentUser={currentUser}
+        onNavigateToHome={() => navigateTo('home')}
+        onNavigateToExplore={() => {
+          navigateTo('home');
+          setTimeout(() => {
+            window.location.hash = '#popular-destinations';
+            document.getElementById('popular-destinations')?.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }}
+        onNavigateToSearch={() => navigateTo('search')}
+        onNavigateToAbout={() => navigateTo('about')}
+        onNavigateToRecent={() => navigateTo('recent')}
+        onNavigateToLogin={() => navigateTo('login')}
+      />
 
       {/* Generator Drawer / Modal */}
       <GeneratorDrawer

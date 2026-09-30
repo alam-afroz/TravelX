@@ -180,6 +180,8 @@ export function SearchWindow({
 
       const generatedItinerary = data?.itinerary || data?.data;
       if (generatedItinerary && generatedItinerary.city && Array.isArray(generatedItinerary.days)) {
+        generatedItinerary.budget = budgetLevel;
+        generatedItinerary.interests = selectedInterests;
         onGenerated(generatedItinerary);
       } else {
         throw new Error('Received invalid itinerary data from server');
@@ -187,7 +189,7 @@ export function SearchWindow({
     } catch (err: any) {
       console.error(err);
       if (matchedPreset) {
-        setErrorMsg(`Please try again. You can also load the verified pre-crafted itinerary for ${city} below.`);
+        setErrorMsg(`Please try again. You can also load the verified pre-crafted travel plan for ${city} below.`);
       } else {
         setErrorMsg('Please try again.');
       }
@@ -405,7 +407,7 @@ export function SearchWindow({
                   onClick={handleLoadInstantPreset}
                   className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-sm font-bold text-xs shrink-0 transition cursor-pointer self-start sm:self-auto"
                 >
-                  Load {matchedPreset.city} Itinerary
+                  Load {matchedPreset.city} Travel Plan
                 </button>
               )}
             </div>

@@ -131,6 +131,8 @@ export function GeneratorDrawer({ isOpen, onClose, onGenerated }: GeneratorDrawe
 
       const generatedItinerary = data?.itinerary || data?.data;
       if (generatedItinerary && generatedItinerary.city && Array.isArray(generatedItinerary.days)) {
+        generatedItinerary.budget = budgetLevel;
+        generatedItinerary.interests = selectedInterests;
         onGenerated(generatedItinerary, data.rawJson);
         onClose();
       } else {
@@ -160,7 +162,7 @@ export function GeneratorDrawer({ isOpen, onClose, onGenerated }: GeneratorDrawe
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900">
-                Generate Custom Travel Itinerary
+                Generate Custom Travel Plan
               </h2>
               <p className="text-xs text-slate-500">
                 Powered by Gemini with strict geographic proximity and real stops
@@ -387,12 +389,12 @@ export function GeneratorDrawer({ isOpen, onClose, onGenerated }: GeneratorDrawe
                 {loading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>{loadingStep || 'Generating Itinerary...'}</span>
+                    <span>{loadingStep || 'Generating Travel Plan...'}</span>
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-4 h-4" />
-                    <span>Generate Itinerary</span>
+                    <span>Generate Travel Plan</span>
                   </>
                 )}
               </button>

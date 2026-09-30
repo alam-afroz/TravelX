@@ -28,7 +28,7 @@ export function RawJsonViewer({ itinerary, onImportJson }: RawJsonViewerProps) {
   };
 
   const handleDownload = () => {
-    const filename = `${itinerary.city.toLowerCase().replace(/\s+/g, '-')}-itinerary.json`;
+    const filename = `${itinerary.city.toLowerCase().replace(/\s+/g, '-')}-travel-plan.json`;
     const blob = new Blob([jsonString], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -75,7 +75,7 @@ export function RawJsonViewer({ itinerary, onImportJson }: RawJsonViewerProps) {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-sm font-bold text-slate-900 font-mono">
-                {itinerary.city.toLowerCase()}-itinerary.json
+                {itinerary.city.toLowerCase()}-travel-plan.json
               </h3>
               {validation.valid ? (
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full">
@@ -159,7 +159,7 @@ export function RawJsonViewer({ itinerary, onImportJson }: RawJsonViewerProps) {
             onChange={(e) => setEditedText(e.target.value)}
             rows={22}
             className="w-full font-mono text-xs p-4 bg-slate-950 text-emerald-400 rounded-sm border border-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 leading-relaxed"
-            placeholder="Paste your itinerary JSON here..."
+            placeholder="Paste your travel plan JSON here..."
           />
         </div>
       ) : (

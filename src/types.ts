@@ -47,6 +47,8 @@ export interface Itinerary {
   summary: string;
   days: DayPlan[];
   stays: StaySpot[];
+  budget?: string;
+  interests?: string[];
 }
 
 export interface GenerationParams {

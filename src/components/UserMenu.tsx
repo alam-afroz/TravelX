@@ -6,9 +6,10 @@ interface UserMenuProps {
   currentUser: any;
   onLogout: () => void;
   onSwitchAccount: () => void;
+  onNavigateToRecent?: () => void;
 }
 
-export function UserMenu({ currentUser, onLogout, onSwitchAccount }: UserMenuProps) {
+export function UserMenu({ currentUser, onLogout, onSwitchAccount, onNavigateToRecent }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -47,6 +48,10 @@ export function UserMenu({ currentUser, onLogout, onSwitchAccount }: UserMenuPro
           </div>
           
           <button 
+            onClick={() => {
+              setIsOpen(false);
+              onNavigateToRecent?.();
+            }}
             className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 cursor-pointer transition-colors"
           >
             <Clock className="w-4 h-4 text-slate-400" />

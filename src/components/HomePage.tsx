@@ -18,6 +18,7 @@ import { motion } from 'motion/react';
 import { PRESET_ITINERARIES } from '../data/presets.ts';
 import { Itinerary } from '../types.ts';
 import { UserMenu } from './UserMenu.tsx';
+import { Footer } from './Footer.tsx';
 import slide1 from '../assets/hero_section/ladakh.png';
 import slide2 from '../assets/hero_section/ghat.jpg';
 import searchImg from '../assets/search.png';
@@ -39,6 +40,7 @@ interface HomePageProps {
   onNavigateToLogin?: () => void;
   onNavigateToSignUp?: () => void;
   onLogout?: () => void;
+  onNavigateToRecent?: () => void;
 }
 
 const containerVariants = {
@@ -58,7 +60,7 @@ const itemVariants = {
   }
 };
 
-export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, onNavigateToLogin, onNavigateToSignUp, onLogout }: HomePageProps) {
+export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, onNavigateToLogin, onNavigateToSignUp, onLogout, onNavigateToRecent }: HomePageProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -116,6 +118,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, 
                 onSwitchAccount={() => {
                   onNavigateToLogin?.();
                 }}
+                onNavigateToRecent={onNavigateToRecent}
               />
             ) : (
               <button 
@@ -180,6 +183,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, 
                 <button 
                   onClick={() => {
                     setIsMobileMenuOpen(false);
+                    onNavigateToRecent?.();
                   }}
                   className="text-left py-2 hover:text-[#2d497c] transition-colors cursor-pointer"
                 >
@@ -333,7 +337,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, 
                 className="w-full lg:w-[40%] py-2"
               >
                 <h3 className="text-2xl font-semibold text-[#2d497c] mb-4 tracking-wide leading-snug">
-                  Get Your Itinerary Plan & Customize it later
+                  Get Your Travel Plan & Customize it later
                 </h3>
                 <p className="text-slate-600 leading-relaxed text-lg">
                   Instantly receive a complete travel plan. Swap out restaurants, change hotels, or adjust timelines directly in the visual studio.
@@ -476,20 +480,15 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, 
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 text-slate-300 py-20 mt-auto border-t-4 border-[#2d497c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <div className="text-3xl font-medium text-white hover:text-blue-400 transition-colors duration-300 tracking-wide mb-6 inline-flex items-center gap-2 cursor-pointer">
-            TravelX
-          </div>
-          <p className="text-base text-slate-400 mb-10 max-w-md mx-auto leading-relaxed">
-            AI Travel Itinerary Generator strictly adhering to schema constraints. Build your dream trip in seconds.
-          </p>
-          <div className="text-sm font-medium text-slate-500">
-            © {new Date().getFullYear()} TravelX. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <Footer 
+        currentUser={currentUser}
+        onNavigateToHome={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        onNavigateToExplore={() => document.getElementById('popular-destinations')?.scrollIntoView({ behavior: 'smooth' })}
+        onNavigateToSearch={() => onStartSearch()}
+        onNavigateToAbout={() => window.location.hash = '#about'}
+        onNavigateToRecent={() => onNavigateToRecent?.()}
+        onNavigateToLogin={() => onNavigateToLogin?.()}
+      />
     </div>
   );
 }

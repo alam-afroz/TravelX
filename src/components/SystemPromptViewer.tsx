@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Copy, Check, Terminal, FileText, CheckCircle2 } from 'lucide-react';
 
-const SYSTEM_PROMPT_TEXT = `You are a travel itinerary generator. You output ONLY valid JSON that
+const SYSTEM_PROMPT_TEXT = `You are a travel plan generator. You output ONLY valid JSON that
 matches the schema below. No markdown, no code fences, no text before
 or after the JSON.
 
