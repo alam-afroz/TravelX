@@ -41,6 +41,7 @@ interface HomePageProps {
   onNavigateToSignUp?: () => void;
   onLogout?: () => void;
   onNavigateToRecent?: () => void;
+  onNavigateToCommunity?: () => void;
 }
 
 const containerVariants = {
@@ -60,7 +61,7 @@ const itemVariants = {
   }
 };
 
-export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, onNavigateToLogin, onNavigateToSignUp, onLogout, onNavigateToRecent }: HomePageProps) {
+export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, onNavigateToLogin, onNavigateToSignUp, onLogout, onNavigateToRecent, onNavigateToCommunity }: HomePageProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -110,7 +111,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, 
           
           {/* Desktop Right Actions */}
           <div className="hidden md:flex items-center gap-8 text-[15px] font-medium text-slate-500 flex-1 justify-end">
-            <button className="hover:text-[#2d497c] transition-colors cursor-pointer">Community</button>
+            <button onClick={() => onNavigateToCommunity?.()} className="hover:text-[#2d497c] transition-colors cursor-pointer">Community</button>
             {currentUser ? (
               <UserMenu 
                 currentUser={currentUser} 
@@ -167,6 +168,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, 
             <button 
               onClick={() => {
                 setIsMobileMenuOpen(false);
+                onNavigateToCommunity?.();
               }}
               className="text-left py-2 hover:text-[#2d497c] transition-colors cursor-pointer"
             >
@@ -486,6 +488,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, 
         onNavigateToExplore={() => document.getElementById('popular-destinations')?.scrollIntoView({ behavior: 'smooth' })}
         onNavigateToSearch={() => onStartSearch()}
         onNavigateToAbout={() => window.location.hash = '#about'}
+        onNavigateToCommunity={() => onNavigateToCommunity?.()}
         onNavigateToRecent={() => onNavigateToRecent?.()}
         onNavigateToLogin={() => onNavigateToLogin?.()}
       />

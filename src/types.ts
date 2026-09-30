@@ -123,3 +123,21 @@ export interface TransportationDetail {
   travelTips: string[];
 }
 
+export interface Post {
+  id?: string;
+  authorId: string;
+  authorName: string;
+  title: string;
+  body: string;
+  commentCount: number;
+  createdAt: any;
+}
+
+export interface Comment {
+  id?: string;
+  postId: string;
+  authorId: string;
+  authorName: string;
+  body: string;
+  createdAt: any;
+}

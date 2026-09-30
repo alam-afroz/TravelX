@@ -17,6 +17,7 @@ import { LoginPage } from './components/LoginPage.tsx';
 import { SignUpPage } from './components/SignUpPage.tsx';
 import { UserMenu } from './components/UserMenu.tsx';
 import { RecentTripsPage } from './components/RecentTripsPage.tsx';
+import { CommunityPage } from './components/CommunityPage.tsx';
 import { Footer } from './components/Footer.tsx';
 import { db, auth } from './lib/firebase.ts';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
@@ -44,7 +45,7 @@ import {
   UserPlus,
 } from 'lucide-react';
 
-type AppView = 'home' | 'search' | 'results' | 'about' | 'login' | 'signup' | 'recent';
+type AppView = 'home' | 'search' | 'results' | 'about' | 'login' | 'signup' | 'recent' | 'community';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<AppView>(() => {
@@ -56,6 +57,7 @@ export default function App() {
       if (hash === '#login') return 'login';
       if (hash === '#signup') return 'signup';
       if (hash === '#recent') return 'recent';
+      if (hash === '#community') return 'community';
     }
     return 'home';
   });
@@ -94,6 +96,8 @@ export default function App() {
         setCurrentView('signup');
       } else if (hash === '#recent') {
         setCurrentView('recent');
+      } else if (hash === '#community') {
+        setCurrentView('community');
       }
     };
 
@@ -210,6 +214,7 @@ export default function App() {
         onNavigateToSignUp={() => navigateTo('signup')}
         onLogout={() => signOut(auth)}
         onNavigateToRecent={() => navigateTo('recent')}
+        onNavigateToCommunity={() => navigateTo('community')}
       />
     );
   }
@@ -250,6 +255,17 @@ export default function App() {
         currentUser={currentUser} 
         onBackToHome={() => navigateTo('home')} 
         onSelectRecentTrip={handleSelectRecentTrip} 
+      />
+    );
+  }
+
+  // Screen 7: Community Page
+  if (currentView === 'community') {
+    return (
+      <CommunityPage 
+        currentUser={currentUser} 
+        onBackToHome={() => navigateTo('home')} 
+        onNavigateToLogin={() => navigateTo('login')}
       />
     );
   }
@@ -588,6 +604,7 @@ export default function App() {
         }}
         onNavigateToSearch={() => navigateTo('search')}
         onNavigateToAbout={() => navigateTo('about')}
+        onNavigateToCommunity={() => navigateTo('community')}
         onNavigateToRecent={() => navigateTo('recent')}
         onNavigateToLogin={() => navigateTo('login')}
       />

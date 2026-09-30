@@ -6,6 +6,7 @@ export interface FooterProps {
   onNavigateToHome: () => void;
   onNavigateToExplore: () => void;
   onNavigateToSearch: () => void;
+  onNavigateToCommunity: () => void;
   onNavigateToAbout: () => void;
   onNavigateToRecent: () => void;
   onNavigateToLogin: () => void;
@@ -16,6 +17,7 @@ export function Footer({
   onNavigateToHome,
   onNavigateToExplore,
   onNavigateToSearch,
+  onNavigateToCommunity,
   onNavigateToAbout,
   onNavigateToRecent,
   onNavigateToLogin
@@ -48,7 +50,7 @@ export function Footer({
           <div className="w-full max-w-sm pt-1">
             <div className="grid grid-cols-2 gap-x-12 gap-y-4">
               <button onClick={onNavigateToHome} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Home</button>
-              <button onClick={() => {}} className="text-left text-sm text-slate-400 hover:text-white transition-colors cursor-default">Community</button>
+              <button onClick={onNavigateToCommunity} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Community</button>
               
               <button onClick={onNavigateToExplore} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Explore</button>
               <button onClick={onNavigateToAbout} className="text-left text-sm text-slate-400 hover:text-white transition-colors">About Us</button>
@@ -61,10 +63,10 @@ export function Footer({
 
         {/* Right: Social Icons */}
         <div className="flex-shrink-0 flex items-center justify-end gap-5 mt-12 md:mt-20 self-end">
-          <a href="#" className="hover:opacity-80 transition-opacity">
+          <a href="https://github.com/alam-afroz/TravelX.git" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
             <img src={githubLogo} alt="GitHub" className="w-[34px] h-[34px] object-contain rounded-full bg-white p-[2px]" />
           </a>
-          <a href="#" className="hover:opacity-80 transition-opacity">
+          <a href="https://www.linkedin.com/in/profile-afroz-alam" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
             <img src={linkedinLogo} alt="LinkedIn" className="w-[34px] h-[34px] object-contain rounded-sm" />
           </a>
         </div>
