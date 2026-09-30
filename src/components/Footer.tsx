@@ -30,33 +30,37 @@ export function Footer({
 
   return (
     <footer className="bg-slate-900 text-slate-300 py-16 mt-16 border-t-4 border-[#2d497c]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6 w-full">
-        {/* Left: Logo */}
-        <div className="flex-shrink-0">
-          <button 
-            className="text-2xl font-medium text-white hover:text-blue-400 transition-colors duration-300 tracking-wide cursor-pointer" 
-            onClick={onNavigateToHome}
-          >
-            TravelX
-          </button>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-start justify-between w-full">
         
-        {/* Center: Links Grid */}
-        <div className="flex-1 w-full max-w-sm">
-          <div className="grid grid-cols-2 gap-x-12 gap-y-4">
-            <button onClick={onNavigateToHome} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Home</button>
-            <button onClick={() => {}} className="text-left text-sm text-slate-400 hover:text-white transition-colors cursor-default">Community</button>
-            
-            <button onClick={onNavigateToExplore} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Explore</button>
-            <button onClick={onNavigateToAbout} className="text-left text-sm text-slate-400 hover:text-white transition-colors">About Us</button>
-            
-            <button onClick={onNavigateToSearch} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Search</button>
-            <button onClick={handleRecentClick} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Recent</button>
+        {/* Left Section: Logo and Links */}
+        <div className="flex flex-col md:flex-row items-start gap-12 md:gap-32 w-full">
+          {/* Left: Logo */}
+          <div className="flex-shrink-0">
+            <button 
+              className="text-2xl font-medium text-white hover:text-blue-400 transition-colors duration-300 tracking-wide cursor-pointer" 
+              onClick={onNavigateToHome}
+            >
+              TravelX
+            </button>
+          </div>
+          
+          {/* Links Grid */}
+          <div className="w-full max-w-sm pt-1">
+            <div className="grid grid-cols-2 gap-x-12 gap-y-4">
+              <button onClick={onNavigateToHome} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Home</button>
+              <button onClick={() => {}} className="text-left text-sm text-slate-400 hover:text-white transition-colors cursor-default">Community</button>
+              
+              <button onClick={onNavigateToExplore} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Explore</button>
+              <button onClick={onNavigateToAbout} className="text-left text-sm text-slate-400 hover:text-white transition-colors">About Us</button>
+              
+              <button onClick={onNavigateToSearch} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Search</button>
+              <button onClick={handleRecentClick} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Recent</button>
+            </div>
           </div>
         </div>
 
         {/* Right: Social Icons */}
-        <div className="flex-shrink-0 flex items-center justify-end gap-5 w-full md:w-auto mt-6 md:mt-0 self-end">
+        <div className="flex-shrink-0 flex items-center justify-end gap-5 mt-12 md:mt-20 self-end">
           <a href="#" className="hover:opacity-80 transition-opacity">
             <img src={githubLogo} alt="GitHub" className="w-[34px] h-[34px] object-contain rounded-full bg-white p-[2px]" />
           </a>
