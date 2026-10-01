@@ -10,6 +10,7 @@ export interface FooterProps {
   onNavigateToAbout: () => void;
   onNavigateToRecent: () => void;
   onNavigateToLogin: () => void;
+  onNavigateToCustomerCare: () => void;
 }
 
 export function Footer({ 
@@ -20,7 +21,8 @@ export function Footer({
   onNavigateToCommunity,
   onNavigateToAbout,
   onNavigateToRecent,
-  onNavigateToLogin
+  onNavigateToLogin,
+  onNavigateToCustomerCare
 }: FooterProps) {
   const handleRecentClick = () => {
     if (currentUser) {
@@ -57,6 +59,8 @@ export function Footer({
               
               <button onClick={onNavigateToSearch} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Search</button>
               <button onClick={handleRecentClick} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Recent</button>
+              
+              <button onClick={onNavigateToCustomerCare} className="text-left text-sm text-slate-400 hover:text-white transition-colors">Customer Care</button>
             </div>
           </div>
         </div>

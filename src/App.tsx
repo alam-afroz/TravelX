@@ -18,6 +18,7 @@ import { SignUpPage } from './components/SignUpPage.tsx';
 import { UserMenu } from './components/UserMenu.tsx';
 import { RecentTripsPage } from './components/RecentTripsPage.tsx';
 import { CommunityPage } from './components/CommunityPage.tsx';
+import { CustomerCarePage } from './components/CustomerCarePage.tsx';
 import { Footer } from './components/Footer.tsx';
 import { db, auth } from './lib/firebase.ts';
 import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth';
@@ -45,7 +46,7 @@ import {
   UserPlus,
 } from 'lucide-react';
 
-type AppView = 'home' | 'search' | 'results' | 'about' | 'login' | 'signup' | 'recent' | 'community';
+type AppView = 'home' | 'search' | 'results' | 'about' | 'login' | 'signup' | 'recent' | 'community' | 'customer-care';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<AppView>(() => {
@@ -58,6 +59,7 @@ export default function App() {
       if (hash === '#signup') return 'signup';
       if (hash === '#recent') return 'recent';
       if (hash === '#community') return 'community';
+      if (hash === '#customer-care') return 'customer-care';
     }
     return 'home';
   });
@@ -98,6 +100,8 @@ export default function App() {
         setCurrentView('recent');
       } else if (hash === '#community') {
         setCurrentView('community');
+      } else if (hash === '#customer-care') {
+        setCurrentView('customer-care');
       }
     };
 
@@ -268,6 +272,11 @@ export default function App() {
         onNavigateToLogin={() => navigateTo('login')}
       />
     );
+  }
+
+  // Screen 8: Customer Care
+  if (currentView === 'customer-care') {
+    return <CustomerCarePage onBackToHome={() => navigateTo('home')} />;
   }
 
   // Screen 3: Results View (Travel Plan Studio)
@@ -607,6 +616,7 @@ export default function App() {
         onNavigateToCommunity={() => navigateTo('community')}
         onNavigateToRecent={() => navigateTo('recent')}
         onNavigateToLogin={() => navigateTo('login')}
+        onNavigateToCustomerCare={() => navigateTo('customer-care')}
       />
 
       {/* Generator Drawer / Modal */}

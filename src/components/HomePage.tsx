@@ -491,6 +491,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, 
         onNavigateToCommunity={() => onNavigateToCommunity?.()}
         onNavigateToRecent={() => onNavigateToRecent?.()}
         onNavigateToLogin={() => onNavigateToLogin?.()}
+        onNavigateToCustomerCare={() => window.location.hash = '#customer-care'}
       />
     </div>
   );
