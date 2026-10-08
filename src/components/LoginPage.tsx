@@ -43,7 +43,7 @@ export function LoginPage({ onBack, onNavigateToSignUp }: { onBack: () => void, 
             </button>
           </div>
           <div className="flex-shrink-0 flex items-center justify-center">
-            <span className="font-medium text-xl text-[#2d497c] tracking-wide">TravelX</span>
+            <span className="font-medium text-xl text-[#2d497c] tracking-wide">ExploreX</span>
           </div>
           <div className="flex-1 flex items-center justify-end" />
         </div>

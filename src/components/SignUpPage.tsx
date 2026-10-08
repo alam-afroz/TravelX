@@ -47,7 +47,7 @@ export function SignUpPage({ onBack, onNavigateToLogin }: { onBack: () => void, 
             </button>
           </div>
           <div className="flex-shrink-0 flex items-center justify-center">
-            <span className="font-medium text-xl text-[#2d497c] tracking-wide">TravelX</span>
+            <span className="font-medium text-xl text-[#2d497c] tracking-wide">ExploreX</span>
           </div>
           <div className="flex-1 flex items-center justify-end" />
         </div>
@@ -58,7 +58,7 @@ export function SignUpPage({ onBack, onNavigateToLogin }: { onBack: () => void, 
           <div className="p-8 space-y-6">
             <div className="text-center space-y-2">
               <h1 className="text-2xl font-bold text-[#2d497c]">Create an Account</h1>
-              <p className="text-slate-500 text-sm">Join TravelX to plan your next adventure.</p>
+              <p className="text-slate-500 text-sm">Join ExploreX to plan your next adventure.</p>
             </div>
 
             {error && (

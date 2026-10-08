@@ -44,7 +44,7 @@ export function Footer({
               className="text-2xl font-medium text-white hover:text-blue-400 transition-colors duration-300 tracking-wide cursor-pointer" 
               onClick={onNavigateToHome}
             >
-              TravelX
+              ExploreX
             </button>
           </div>
           

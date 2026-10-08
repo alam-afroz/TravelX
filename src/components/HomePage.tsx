@@ -106,7 +106,7 @@ export function HomePage({ onStartSearch, onSelectPresetItinerary, currentUser, 
           
           {/* Center Logo */}
           <div className="text-2xl font-medium text-[#2d497c] hover:text-blue-600 transition-colors duration-300 tracking-wide select-none flex items-center justify-center cursor-pointer shrink-0">
-            TravelX
+            ExploreX
           </div>
           
           {/* Desktop Right Actions */}

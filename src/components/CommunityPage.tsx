@@ -191,7 +191,7 @@ export function CommunityPage({ currentUser, onBackToHome, onNavigateToLogin }: 
           </div>
           <div className="flex justify-center">
             <button onClick={onBackToHome} className="font-medium text-2xl text-[#2d497c] tracking-wide">
-              TravelX
+              ExploreX
             </button>
           </div>
           <div className="flex justify-end"></div>

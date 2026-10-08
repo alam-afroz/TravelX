@@ -308,7 +308,7 @@ export default function App() {
               className="cursor-pointer group flex flex-col items-center"
             >
               <span className="font-medium text-xl text-[#2d497c] tracking-wide">
-                TravelX
+                ExploreX
               </span>
             </button>
           </div>

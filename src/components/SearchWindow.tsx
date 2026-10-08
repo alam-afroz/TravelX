@@ -220,7 +220,7 @@ export function SearchWindow({
               onClick={onBackToHome}
               className="font-medium text-2xl text-[#2d497c] tracking-wide hover:opacity-80 transition-opacity cursor-pointer"
             >
-              TravelX
+              ExploreX
             </button>
           </div>
           <div className="flex justify-end">

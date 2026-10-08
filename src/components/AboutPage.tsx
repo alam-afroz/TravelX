@@ -29,7 +29,7 @@ export function AboutPage({ onBackToHome }: AboutPageProps) {
               onClick={onBackToHome}
               className="font-medium text-2xl text-[#2d497c] tracking-wide hover:opacity-80 transition-opacity cursor-pointer"
             >
-              TravelX
+              ExploreX
             </button>
           </div>
           <div className="flex justify-end"></div>
@@ -46,7 +46,7 @@ export function AboutPage({ onBackToHome }: AboutPageProps) {
         >
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-medium text-[#2d497c] tracking-wide mb-3">About TravelX</h1>
+            <h1 className="text-4xl font-medium text-[#2d497c] tracking-wide mb-3">About ExploreX</h1>
             <p className="text-lg text-slate-500 font-medium">Your trip, planned in seconds.</p>
           </div>
 
@@ -55,10 +55,10 @@ export function AboutPage({ onBackToHome }: AboutPageProps) {
             {/* Section 1 */}
             <section>
               <h2 className="text-2xl font-semibold text-slate-900 mb-4 flex items-center gap-2">
-                What is TravelX?
+                What is ExploreX?
               </h2>
               <p className="mb-4 text-[15px]">
-                TravelX is a smart travel itinerary planner. Tell us where you're going, how many days you have, what you enjoy, and your budget, and TravelX builds a complete day-by-day plan for you: places to visit, local food to try, stays to book, estimated entry costs, and an interactive map of your route.
+                ExploreX is a smart travel itinerary planner. Tell us where you're going, how many days you have, what you enjoy, and your budget, and ExploreX builds a complete day-by-day plan for you: places to visit, local food to try, stays to book, estimated entry costs, and an interactive map of your route.
               </p>
               <p className="font-medium text-slate-700 bg-blue-50/50 p-4 rounded-sm border border-blue-100/50 text-[15px]">
                 No long research. No ten open tabs. No account needed.
@@ -102,7 +102,7 @@ export function AboutPage({ onBackToHome }: AboutPageProps) {
                   <strong>Choose your trip:</strong> enter your city, number of days, interests, and budget level.
                 </li>
                 <li className="pl-2">
-                  <strong>Get your plan:</strong> TravelX generates a themed itinerary for each day, with nearby stops grouped together.
+                  <strong>Get your plan:</strong> ExploreX generates a themed itinerary for each day, with nearby stops grouped together.
                 </li>
                 <li className="pl-2">
                   <strong>Explore:</strong> follow the numbered pins on the map, check food and stay suggestions, and print or save your plan.
@@ -114,7 +114,7 @@ export function AboutPage({ onBackToHome }: AboutPageProps) {
             <section className="bg-[#E6E6FA] p-3 rounded-sm border border-purple-200 shadow-sm">
               <h2 className="text-lg font-bold text-slate-900 mb-1">A note on accuracy</h2>
               <p className="text-[13px] text-slate-800 leading-tight">
-                TravelX uses AI to generate itineraries and price estimates. Entry fees are approximate and marked as <em className="font-semibold">AI-estimated</em>, and opening hours and prices can change, so please confirm details with the official source before you travel.
+                ExploreX uses AI to generate itineraries and price estimates. Entry fees are approximate and marked as <em className="font-semibold">AI-estimated</em>, and opening hours and prices can change, so please confirm details with the official source before you travel.
               </p>
             </section>
 
@@ -122,7 +122,7 @@ export function AboutPage({ onBackToHome }: AboutPageProps) {
             <section className="pt-6 border-t border-slate-100 text-center">
               <h2 className="text-xl font-semibold text-slate-900 mb-3">About the creator</h2>
               <p className="mb-4 text-[15px]">
-                We are a team of four people, we are students of <strong>AKTU</strong>. TravelX is initially a college project, built to show how technology can make travel simpler and help more people explore new places with confidence.
+                We are a team of four people, we are students of <strong>AKTU</strong>. ExploreX is initially a college project, built to show how technology can make travel simpler and help more people explore new places with confidence.
               </p>
               <p className="text-lg italic font-medium text-blue-600">
                 Happy travels!
